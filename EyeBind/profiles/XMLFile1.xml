@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<EyeBind>
+  <GazeRegion>
+    <name>test5</name>
+    <top>400</top>
+    <left>300</left>
+    <width>300</width>
+    <height>250</height>
+    <input>xxx</input>
+  </GazeRegion>
+  <GazeRegion>
+    <name>gggggggggg</name>
+    <top>666</top>
+    <left>200</left>
+    <width>100</width>
+    <height>100</height>
+    <input>xxx</input>
+  </GazeRegion>
+  <GazeRegion>
+    <name>yyy</name>
+    <top>288</top>
+    <left>577</left>
+    <width>222</width>
+    <height>333</height>
+    <input>xxx</input>
+  </GazeRegion>
+</EyeBind>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EyeBind>
+  <GazeRegionProfile Name="default" />
+  <BlinkMonitor>
+    <LeftEye>
+      <Delay>500</Delay>
+      <Inputs />
+    </LeftEye>
+    <RightEye>
+      <Delay>500</Delay>
+      <Inputs />
+    </RightEye>
+  </BlinkMonitor>
+</EyeBind>
