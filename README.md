@@ -47,17 +47,17 @@ The EyeBind solution should build in Vistual Studio 2013 without any tweaking re
 ####Download:
 
 * This project is on [GitHub](https://github.com/tqphan/EyeBind), so let me know if I've mess up somewhere. 
-* If you prefer not to build EyeBind yourself, the executable can be found [here](https://www.dropbox.com/s/ck49jsdmwl8jhh3/EyeBind.zip?dl=1).
+* If you prefer not to build EyeBind yourself, the executable of the latest build can be found [here](https://github.com/tqphan/EyeBind/releases).
 
 ####Contact:
 
-If you find EyeBind to be useful, send me an [e-mail](quoc@hush.ai) (quoc@hush.ai) so I know my time wasn't wasted. Feedbacks and features requests are also welcomed. 
+If you find EyeBind to be useful, send me an [e-mail](quoc@hush.ai) so I know my time wasn't wasted. Feedbacks and features requests are also welcomed. 
 I coded EyeBind primarily for myself, but that isn't entirely true since many of the features in EyeBind would have been hard-coded if it was created purely out of self-interest. The other reason why EyeBind exists is because I find proprietary solutions, especially ones marketed towards disabled users, to be over priced. Hopefully, this will help disabled gamers who can't afford them.
 
 ## Props to other open source projects used in EyeBind:
 
 * [Windows Input Simulator](https://inputsimulator.codeplex.com/) for simulation of keyboard/mouse inputs.
 * [freesfx](http://www.freesfx.co.uk) for sound effects.
-* [globalmousekeyhook](https://github.com/gmamaladze/globalmousekeyhook) for global hot keys detections (in a future update).
+* [globalmousekeyhook](https://github.com/gmamaladze/globalmousekeyhook) for global hotkeys detections.
 
 

@@ -118,5 +118,113 @@ namespace EyeBind.Properties {
                 this["BlinkActivationSoundEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int LastUsedProfileIndex {
+            get {
+                return ((int)(this["LastUsedProfileIndex"]));
+            }
+            set {
+                this["LastUsedProfileIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::System.Windows.Forms.Keys MouseMoveHotKey {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["MouseMoveHotKey"]));
+            }
+            set {
+                this["MouseMoveHotKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::System.Windows.Forms.Keys ToggleKeyboardSimulationHotKey {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ToggleKeyboardSimulationHotKey"]));
+            }
+            set {
+                this["ToggleKeyboardSimulationHotKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::System.Windows.Forms.Keys ToggleSoundsHotKey {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ToggleSoundsHotKey"]));
+            }
+            set {
+                this["ToggleSoundsHotKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::System.Windows.Forms.Keys ToggleContinuousMouseMoveHotKey {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ToggleContinuousMouseMoveHotKey"]));
+            }
+            set {
+                this["ToggleContinuousMouseMoveHotKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("None")]
+        public global::System.Windows.Forms.Keys ToggleGazeMarkerHotKey {
+            get {
+                return ((global::System.Windows.Forms.Keys)(this["ToggleGazeMarkerHotKey"]));
+            }
+            set {
+                this["ToggleGazeMarkerHotKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GlobalSoundEnabled {
+            get {
+                return ((bool)(this["GlobalSoundEnabled"]));
+            }
+            set {
+                this["GlobalSoundEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GazeEnterSoundEnabled {
+            get {
+                return ((bool)(this["GazeEnterSoundEnabled"]));
+            }
+            set {
+                this["GazeEnterSoundEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GazeExitSoundEnabled {
+            get {
+                return ((bool)(this["GazeExitSoundEnabled"]));
+            }
+            set {
+                this["GazeExitSoundEnabled"] = value;
+            }
+        }
     }
 }

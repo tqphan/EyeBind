@@ -6,6 +6,9 @@ namespace EyeBind
     public class MouseMover
     {
         private bool enabled;
+        private bool continuousMouseMoveEnabled;
+        private int lastX;
+        private int lastY;
 
         [DllImport("user32.dll")]
         static extern bool SetCursorPos(int X, int Y);
@@ -34,9 +37,33 @@ namespace EyeBind
             }
         }
 
+        public bool ContinuousMouseMoveEnabled
+        {
+            get
+            {
+                return this.continuousMouseMoveEnabled;
+            }
+            set
+            {
+                this.continuousMouseMoveEnabled = value;
+            }
+        }
+
         private void FixationDataStream_Next(object sender, EyeXFramework.FixationEventArgs e)
         {
-            SetCursorPos((int)e.X, (int)e.Y);
+            int x = (int)e.X;
+            int y = (int)e.Y;
+
+            this.lastX = x;
+            this.lastY = y;
+
+            if(this.continuousMouseMoveEnabled)
+                SetCursorPos(x, y);
+        }
+
+        public void MoveMouse()
+        {
+            SetCursorPos(this.lastX, this.lastY);
         }
     }
 }

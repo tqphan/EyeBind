@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System.Xml;
 using EyeBind.Properties;
 
 namespace EyeBind
@@ -61,6 +62,9 @@ namespace EyeBind
         private int activationDelay;
         private int deactivationDelay;
 
+        private int activationCooldown;
+        private int deactivationCooldown;
+
         private double gazeEnterTimestamp;
         private double gazeExitTimestamp;
 
@@ -92,12 +96,13 @@ namespace EyeBind
             this.Controls.Add(this.gazePanel);
         }
 
-        public GazeRegion(System.Xml.XmlNode xn): this()
+        public GazeRegion(XmlNode xn): this()
         {
             this.FromXml(xn);
         }
         #endregion
 
+        #region Clone
         public GazeRegion Clone()
         {
             GazeRegion clone = new GazeRegion();
@@ -122,6 +127,8 @@ namespace EyeBind
 
             return clone;
         }
+
+        #endregion
 
         #region INotifyPropertyChanged
 
@@ -321,8 +328,34 @@ namespace EyeBind
 
         public int ActivationCooldown
         {
-            get;
-            set;
+            get
+            {
+                return this.activationCooldown;
+            }
+            set
+            {
+                if (value != this.activationCooldown)
+                {
+                    this.activationCooldown = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public int DeactivationCooldown
+        {
+            get
+            {
+                return this.deactivationCooldown;
+            }
+            set
+            {
+                if (value != this.deactivationCooldown)
+                {
+                    this.deactivationCooldown = value;
+                    NotifyPropertyChanged();
+                }
+            }
         }
 
         #endregion
@@ -392,6 +425,11 @@ namespace EyeBind
             {
                 this.OnGazeActivation();
             }
+
+            if (Settings.Default.GazeEnterSoundEnabled && Settings.Default.GlobalSoundEnabled)
+            {
+                GazeSoundPlayer.PlayGazeEnterSound();
+            }
         }
 
         private void OnGazeExit(double timeStamp)
@@ -402,6 +440,11 @@ namespace EyeBind
             if (this.activated && this.deactivationDelay < 1)
             {
                 this.OnGazeDeactivation();
+            }
+
+            if (Settings.Default.GazeExitSoundEnabled && Settings.Default.GlobalSoundEnabled)
+            {
+                GazeSoundPlayer.PlayGazeExitSound();
             }
         }
 
@@ -439,9 +482,9 @@ namespace EyeBind
 
             this.gazePanel.BackColor = this.GazeActivationColor;
 
-            if(Settings.Default.ActivationSoundEnabled)
+            if (Settings.Default.ActivationSoundEnabled && Settings.Default.GlobalSoundEnabled)
             {
-                GazeSoundPlayer.Play();
+                GazeSoundPlayer.PlayGazeActivationSound();
             }
         }
 
@@ -456,9 +499,9 @@ namespace EyeBind
 
             this.gazePanel.BackColor = this.GazeDeactivationColor;
 
-            if (Settings.Default.DeactivationSoundEnabled)
+            if (Settings.Default.DeactivationSoundEnabled && Settings.Default.GlobalSoundEnabled)
             {
-                GazeSoundPlayer.Play();
+                GazeSoundPlayer.PlayGazeDeactivationSound();
             }
         }
 
@@ -487,12 +530,12 @@ namespace EyeBind
 
         #region XML Read/Write
 
-        private void FromXml(System.Xml.XmlNode xn)
+        private void FromXml(XmlNode xn)
         {
             int i = 0;
             double d = 1.0;
 
-            System.Xml.XmlNode n = xn.SelectSingleNode(".//Name");
+            XmlNode n = xn.SelectSingleNode(".//Name");
             this.RegionName = n.InnerText;
 
             n = xn.SelectSingleNode(".//Top");
@@ -597,70 +640,98 @@ namespace EyeBind
             }
             i = 0;
 
+            n = xn.SelectSingleNode(".//ActivationCooldown");
+            if (int.TryParse(n.InnerText, out i))
+            {
+                if (i >= 0)
+                    this.ActivationCooldown = i;
+                else
+                    this.ActivationCooldown = 0;
+            }
+            i = 0;
+
+            n = xn.SelectSingleNode(".//DeactivationCooldown");
+            if (int.TryParse(n.InnerText, out i))
+            {
+                if (i >= 0)
+                    this.DeactivationCooldown = i;
+                else
+                    this.DeactivationCooldown = 0;
+            }
+            i = 0;
+
             n = xn.SelectSingleNode(".//KeyboardInputSimulator");
             this.keyboardInputSimulator = new KeyboardInputSimulator(n);
         }
 
-        public System.Xml.XmlDocument ToXml()
+        public XmlDocument ToXml()
         {
-            System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument();
+            XmlDocument xmlDoc = new XmlDocument();
 
-            System.Xml.XmlElement root = xmlDoc.CreateElement("GazeRegion");
+            XmlElement root = xmlDoc.CreateElement("GazeRegion");
 
-            System.Xml.XmlElement name = xmlDoc.CreateElement("Name");
+            XmlElement name = xmlDoc.CreateElement("Name");
             name.InnerText = this.RegionName;
             root.AppendChild(name);
 
-            System.Xml.XmlElement top = xmlDoc.CreateElement("Top");
+            XmlElement top = xmlDoc.CreateElement("Top");
             top.InnerText = this.Top.ToString();
             root.AppendChild(top);
 
-            System.Xml.XmlElement left = xmlDoc.CreateElement("Left");
+            XmlElement left = xmlDoc.CreateElement("Left");
             left.InnerText = this.Left.ToString();
             root.AppendChild(left);
 
-            System.Xml.XmlElement width = xmlDoc.CreateElement("Width");
+            XmlElement width = xmlDoc.CreateElement("Width");
             width.InnerText = this.Width.ToString();
             root.AppendChild(width);
 
-            System.Xml.XmlElement height = xmlDoc.CreateElement("Height");
+            XmlElement height = xmlDoc.CreateElement("Height");
             height.InnerText = this.Height.ToString();
             root.AppendChild(height);
 
-            System.Xml.XmlElement topMost = xmlDoc.CreateElement("TopMost");
+            XmlElement topMost = xmlDoc.CreateElement("TopMost");
             topMost.InnerText = this.TopMost.ToString();
             root.AppendChild(topMost);
 
-            System.Xml.XmlElement opacity = xmlDoc.CreateElement("Opacity");
+            XmlElement opacity = xmlDoc.CreateElement("Opacity");
             opacity.InnerText = this.Opacity.ToString();
             root.AppendChild(opacity);
 
-            System.Xml.XmlElement gazeEnterColor = xmlDoc.CreateElement("GazeEnterColor");
+            XmlElement gazeEnterColor = xmlDoc.CreateElement("GazeEnterColor");
             gazeEnterColor.InnerText = String.Format("#{0:X2}{1:X2}{2:X2}", this.GazeEnterColor.R, this.GazeEnterColor.G, this.GazeEnterColor.B);
             root.AppendChild(gazeEnterColor);
 
-            System.Xml.XmlElement gazeExitColor = xmlDoc.CreateElement("GazeExitColor");
+            XmlElement gazeExitColor = xmlDoc.CreateElement("GazeExitColor");
             gazeExitColor.InnerText = String.Format("#{0:X2}{1:X2}{2:X2}", this.GazeExitColor.R, this.GazeExitColor.G, this.GazeExitColor.B);
             root.AppendChild(gazeExitColor);
 
-            System.Xml.XmlElement gazeActivationColor = xmlDoc.CreateElement("GazeActivationColor");
+            XmlElement gazeActivationColor = xmlDoc.CreateElement("GazeActivationColor");
             gazeActivationColor.InnerText = String.Format("#{0:X2}{1:X2}{2:X2}", this.GazeActivationColor.R, this.GazeActivationColor.G, this.GazeActivationColor.B);
             root.AppendChild(gazeActivationColor);
 
-            System.Xml.XmlElement gazeDeactivationColor = xmlDoc.CreateElement("GazeDeactivationColor");
+            XmlElement gazeDeactivationColor = xmlDoc.CreateElement("GazeDeactivationColor");
             gazeDeactivationColor.InnerText = String.Format("#{0:X2}{1:X2}{2:X2}", this.GazeDeactivationColor.R, this.GazeDeactivationColor.G, this.GazeDeactivationColor.B);
             root.AppendChild(gazeDeactivationColor);
 
-            System.Xml.XmlElement activationDelay = xmlDoc.CreateElement("ActivationDelay");
+            XmlElement activationDelay = xmlDoc.CreateElement("ActivationDelay");
             activationDelay.InnerText = this.ActivationDelay.ToString();
             root.AppendChild(activationDelay);
 
-            System.Xml.XmlElement deactivationDelay = xmlDoc.CreateElement("DeactivationDelay");
+            XmlElement deactivationDelay = xmlDoc.CreateElement("DeactivationDelay");
             deactivationDelay.InnerText = this.DeactivationDelay.ToString();
             root.AppendChild(deactivationDelay);
 
-            System.Xml.XmlDocument xd = this.keyboardInputSimulator.ToXml();
-            System.Xml.XmlDocumentFragment xfrag = xmlDoc.CreateDocumentFragment();
+            XmlElement activationCooldown = xmlDoc.CreateElement("ActivationCooldown");
+            activationCooldown.InnerText = this.ActivationCooldown.ToString();
+            root.AppendChild(activationCooldown);
+
+            XmlElement deactivationCooldown = xmlDoc.CreateElement("DeactivationCooldown");
+            deactivationCooldown.InnerText = this.DeactivationCooldown.ToString();
+            root.AppendChild(deactivationCooldown);
+
+            XmlDocument xd = this.keyboardInputSimulator.ToXml();
+            XmlDocumentFragment xfrag = xmlDoc.CreateDocumentFragment();
             xfrag.InnerXml = xd.OuterXml;
             root.AppendChild(xfrag);
 
@@ -670,34 +741,6 @@ namespace EyeBind
         }
 
         #endregion
-
-        //protected override System.Windows.Forms.CreateParams CreateParams
-        //{
-        //    get
-        //    {
-        //        const int WS_DLGFRAME = 0x00400000;
-        //        const int WS_THICKFRAME = 0x00040000;
-        //        const int WS_POPUP = unchecked((int)0x80000000);
-
-        //        const int WS_OVERLAPPED = 0x00000000;
-        //        const int WS_CAPTION = 0x00C00000;
-        //        const int WS_SYSMENU = 0x00080000;
-        //        const int WS_MAXIMIZEBOX = 0x00010000;
-        //        const int WS_MINIMIZEBOX = 0x00020000;
-        //        const int WS_OVERLAPPEDWINDOW = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
-        //        const int WS_SIZEBOX = 0x00040000;
-
-
-        //        System.Windows.Forms.CreateParams cp = base.CreateParams;
-        //        cp.Height = 30;
-        //        cp.Width = 30;
-        //        //cp.Style = 0;
-        //        //cp.Style |= WS_OVERLAPPEDWINDOW;
-        //        //cp.Style ^= WS_THICKFRAME;
-        //        //cp.Style |= WS_DLGFRAME | WS_POPUP;
-        //        return cp;
-        //    }
-        //}
 
         #region WndProc
 

@@ -63,6 +63,24 @@ namespace EyeBind.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream activation {
+            get {
+                return ResourceManager.GetStream("activation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream blink {
+            get {
+                return ResourceManager.GetStream("blink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream button_click_0 {
             get {
                 return ResourceManager.GetStream("button_click_0", resourceCulture);
@@ -75,6 +93,15 @@ namespace EyeBind.Properties {
         internal static System.IO.UnmanagedMemoryStream button_click_1 {
             get {
                 return ResourceManager.GetStream("button_click_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream deactivation {
+            get {
+                return ResourceManager.GetStream("deactivation", resourceCulture);
             }
         }
         
@@ -92,11 +119,30 @@ namespace EyeBind.Properties {
         ///      &lt;Inputs /&gt;
         ///    &lt;/RightEye&gt;
         ///  &lt;/BlinkMonitor&gt;
-        ///&lt;/EyeBind&gt;.
+        ///&lt;/EyeBind&gt;
+        ///.
         /// </summary>
         internal static string default_profile {
             get {
                 return ResourceManager.GetString("default_profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream enter {
+            get {
+                return ResourceManager.GetStream("enter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream exit {
+            get {
+                return ResourceManager.GetStream("exit", resourceCulture);
             }
         }
         

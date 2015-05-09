@@ -1,12 +1,15 @@
-﻿
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
 namespace EyeBind
 {
     public class GazeRegionProfile
     {
-        private System.ComponentModel.BindingList<GazeRegion> grl = new System.ComponentModel.BindingList<GazeRegion>();
+        private BindingList<GazeRegion> grl = new BindingList<GazeRegion>();
         private string name;
+        private Keys hotkey = Keys.None;
 
-        public System.ComponentModel.BindingList<GazeRegion> Profile
+        public BindingList<GazeRegion> Profile
         {
             get
             {
@@ -104,7 +107,8 @@ namespace EyeBind
             System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument();
             xmlDoc.AppendChild(xmlDoc.CreateElement("GazeRegionProfile"));
             xmlDoc.DocumentElement.SetAttribute("Name", this.Name);
-
+            xmlDoc.DocumentElement.SetAttribute("Hotkey", ((int)this.hotkey).ToString());
+            
             foreach (GazeRegion gr in this.grl)
             {
                 System.Xml.XmlDocument xd = gr.ToXml();

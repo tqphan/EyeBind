@@ -123,8 +123,8 @@ namespace EyeBind
                 if(!Settings.Default.InputSimulationPaused)
                     this.SimulateKeys(this.eyeInputs);
 
-                if (Settings.Default.BlinkActivationSoundEnabled)
-                    GazeSoundPlayer.Play();
+                if (Settings.Default.BlinkActivationSoundEnabled && Settings.Default.GlobalSoundEnabled)
+                    GazeSoundPlayer.PlayBinkSound();
             }
         }
 

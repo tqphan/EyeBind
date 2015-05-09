@@ -52,9 +52,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EyeXFramework">
-      <HintPath>..\EyeXFramework\bin\x86\Debug\EyeXFramework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -119,6 +116,9 @@
     <Compile Include="GeneralSettingsDialog.Designer.cs">
       <DependentUpon>GeneralSettingsDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="HotKeyTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="IntDecimalConverter.cs" />
     <Compile Include="DoubleIntConverter.cs" />
     <Compile Include="KeyboardInput.cs" />
@@ -132,11 +132,22 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MouseMover.cs" />
+    <Compile Include="ProfileEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfileEditor.Designer.cs">
+      <DependentUpon>ProfileEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProfilesComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="ScreenOverlay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GeneralSettingsDialog.resx">
       <DependentUpon>GeneralSettingsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProfileEditor.resx">
+      <DependentUpon>ProfileEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -174,11 +188,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -193,9 +202,24 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\activation.wav" />
+    <None Include="resources\blink.wav" />
+    <None Include="resources\deactivation.wav" />
+    <None Include="resources\enter.wav" />
+    <None Include="resources\exit.wav" />
     <Content Include="Tobii.EyeX.Client.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EyeXFramework\EyeXFramework.csproj">
+      <Project>{c9bbfbac-fd0f-46de-843f-f3620bf79dc2}</Project>
+      <Name>EyeXFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MouseKeyboardActivityMonitor\MouseKeyboardActivityMonitor.csproj">
+      <Project>{f52aa97e-180a-40ed-8f2b-09080171d6c7}</Project>
+      <Name>MouseKeyboardActivityMonitor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

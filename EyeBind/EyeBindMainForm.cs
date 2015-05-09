@@ -1,11 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using EyeBind.Properties;
+using MouseKeyboardActivityMonitor;
+using MouseKeyboardActivityMonitor.WinApi;
 
 namespace EyeBind
 {
     public partial class EyeBindMainForm : Form
     {
+        private KeyboardHookListener keyboardHookManager;
         private BindingList<GazeRegionProfile> profilesList = new BindingList<GazeRegionProfile>();
         private BlinkMonitor blinkMonitor;
         private MouseMover mouseMover = new MouseMover();
@@ -32,22 +36,67 @@ namespace EyeBind
             InitializeComponent();
             
             this.SetPauseSimulationCheckBoxText();
+
+            this.SetGlobalKeyboardHook();
+
+            this.mouseMover.Enabled = true;
         }
 
+        #region Global Keyboard Hook
+        private void SetGlobalKeyboardHook()
+        {
+            this.keyboardHookManager = new KeyboardHookListener(new GlobalHooker());
+            this.keyboardHookManager.Enabled = true;
+            this.keyboardHookManager.KeyUp += keyboardHookManager_KeyUp;
+        }
+
+        private void keyboardHookManager_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(e.KeyData == Properties.Settings.Default.ToggleKeyboardSimulationHotKey)
+            {
+                this.SetSimulationState(!GetSimulationState());
+            }
+
+            if(e.KeyData == Properties.Settings.Default.MouseMoveHotKey)
+            {
+                this.mouseMover.MoveMouse();
+            }
+
+            if(e.KeyData == Properties.Settings.Default.ToggleSoundsHotKey)
+            {
+                Properties.Settings.Default.GlobalSoundEnabled = !Properties.Settings.Default.GlobalSoundEnabled;
+            }
+
+            if (e.KeyData == Properties.Settings.Default.ToggleGazeMarkerHotKey)
+            {
+                this.gazeMarkerCheckBox.Checked = !this.gazeMarkerCheckBox.Checked;
+            }
+
+            if (e.KeyData == Properties.Settings.Default.ToggleContinuousMouseMoveHotKey)
+            {
+                this.mouseMover.ContinuousMouseMoveEnabled = !this.mouseMover.ContinuousMouseMoveEnabled;
+            }
+        }
+        #endregion
+
+        #region overrides
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             this.ActiveControl = null;
             this.LoadProfiles();
+            this.LoadLastUsedProfile();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnClosing(e);
             this.SaveProfiles("profile.xml");
+            this.SaveLastUsedProfile();
             Properties.Settings.Default.Save();
             this.CloseAllGazeRegions();
         }
+        #endregion
 
         private void CloseAllGazeRegions()
         {
@@ -165,6 +214,7 @@ namespace EyeBind
 
         #endregion
 
+        #region Buttons Clicks
         private void newProfileButton_Click(object sender, EventArgs e)
         {
             this.profilesComboBox.AddProfile();
@@ -215,11 +265,6 @@ namespace EyeBind
             }
         }
 
-        private void pauseSimulationCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            this.SetPauseSimulationCheckBoxText();
-        }
-
         private void hideGazeRegionsButton_Click(object sender, EventArgs e)
         {
             this.profilesComboBox.HideSelectedProfile();
@@ -241,17 +286,20 @@ namespace EyeBind
 
         private void mouseMoverButton_Click(object sender, EventArgs e)
         {
-            this.mouseMover.Enabled = !this.mouseMover.Enabled;
+            this.mouseMover.ContinuousMouseMoveEnabled = !this.mouseMover.ContinuousMouseMoveEnabled;
         }
 
         private void generalSettingsButton_Click(object sender, EventArgs e)
         {
             using (GeneralSettingsDialog gsd = new GeneralSettingsDialog())
             {
+                this.keyboardHookManager.Enabled = false;
                 gsd.ShowDialog();
                 gsd.Dispose();
+                this.keyboardHookManager.Enabled = true;
             }
         }
+        #endregion
 
         public void SetSimulationState(bool paused)
         {
@@ -274,5 +322,27 @@ namespace EyeBind
                 this.pauseSimulationCheckBox.Text = "Pause Simulation";
             }
         }
+
+        #region last used profile
+        private void LoadLastUsedProfile()
+        {
+            if(Settings.Default.LastUsedProfileIndex > -1)
+            {
+                try
+                {
+                    this.profilesComboBox.SelectedIndex = Settings.Default.LastUsedProfileIndex;
+                }
+                catch
+                {
+                    //to-do
+                }
+            }
+        }
+
+        private void SaveLastUsedProfile()
+        {
+            Settings.Default.LastUsedProfileIndex = this.profilesComboBox.SelectedIndex;
+        }
+        #endregion
     }
 }
