@@ -640,25 +640,40 @@ namespace EyeBind
             }
             i = 0;
 
-            n = xn.SelectSingleNode(".//ActivationCooldown");
-            if (int.TryParse(n.InnerText, out i))
+            try
             {
-                if (i >= 0)
-                    this.ActivationCooldown = i;
-                else
-                    this.ActivationCooldown = 0;
+                n = xn.SelectSingleNode(".//ActivationCooldown");
+                if (int.TryParse(n.InnerText, out i))
+                {
+                    if (i >= 0)
+                        this.ActivationCooldown = i;
+                    else
+                        this.ActivationCooldown = 0;
+                }
+                i = 0;
             }
-            i = 0;
+            catch
+            {
+                this.ActivationCooldown = 0;
+                i = 0;
+            }
 
-            n = xn.SelectSingleNode(".//DeactivationCooldown");
-            if (int.TryParse(n.InnerText, out i))
+            try
             {
-                if (i >= 0)
-                    this.DeactivationCooldown = i;
-                else
-                    this.DeactivationCooldown = 0;
+                n = xn.SelectSingleNode(".//DeactivationCooldown");
+                if (int.TryParse(n.InnerText, out i))
+                {
+                    if (i >= 0)
+                        this.DeactivationCooldown = i;
+                    else
+                        this.DeactivationCooldown = 0;
+                }
+                i = 0;
             }
-            i = 0;
+            catch
+            {
+                this.DeactivationCooldown = 0;
+            }
 
             n = xn.SelectSingleNode(".//KeyboardInputSimulator");
             this.keyboardInputSimulator = new KeyboardInputSimulator(n);
