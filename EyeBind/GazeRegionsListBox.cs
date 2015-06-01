@@ -27,8 +27,6 @@ namespace EyeBind
                     return false;
                 }
             }
-
-            //System.Media.SystemSounds.Beep.Play();
             return false;
         }
 

@@ -30,35 +30,35 @@
         {
             this.blinktabControl = new System.Windows.Forms.TabControl();
             this.leftEyeTabPage = new System.Windows.Forms.TabPage();
+            this.leftEyeBinkEnabledCheckBox = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.leftEyeActivationDelayNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.leftEyeClearInputsButton = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.leftEyeKeyRecorderDataGridView = new EyeBind.KeyRecorderDataGridView();
+            this.leftEyeKeyRecorderCheckBox = new EyeBind.KeyRecorderCheckBox();
             this.rightEyeTabPage = new System.Windows.Forms.TabPage();
+            this.rightEyeBinkEnabledCheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.rightEyeActivationDelayNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.rightEyeClearInputsButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.leftEyeKeyRecorderDataGridView = new EyeBind.KeyRecorderDataGridView();
-            this.leftEyeKeyRecorderCheckBox = new EyeBind.KeyRecorderCheckBox();
             this.rightEyeKeyRecorderDataGridView = new EyeBind.KeyRecorderDataGridView();
             this.rightEyeKeyRecorderCheckBox = new EyeBind.KeyRecorderCheckBox();
-            this.leftEyeBinkEnabledCheckBox = new System.Windows.Forms.CheckBox();
-            this.rightEyeBinkEnabledCheckBox = new System.Windows.Forms.CheckBox();
             this.blinktabControl.SuspendLayout();
             this.leftEyeTabPage.SuspendLayout();
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftEyeActivationDelayNumericUpDown)).BeginInit();
             this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.leftEyeKeyRecorderDataGridView)).BeginInit();
             this.rightEyeTabPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rightEyeActivationDelayNumericUpDown)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.leftEyeKeyRecorderDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightEyeKeyRecorderDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,6 +88,18 @@
             this.leftEyeTabPage.TabIndex = 0;
             this.leftEyeTabPage.Text = "Left Eye";
             this.leftEyeTabPage.UseVisualStyleBackColor = true;
+            // 
+            // leftEyeBinkEnabledCheckBox
+            // 
+            this.leftEyeBinkEnabledCheckBox.AutoSize = true;
+            this.leftEyeBinkEnabledCheckBox.Checked = global::EyeBind.Properties.Settings.Default.LeftEyeBlinkEnabled;
+            this.leftEyeBinkEnabledCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EyeBind.Properties.Settings.Default, "LeftEyeBlinkEnabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.leftEyeBinkEnabledCheckBox.Location = new System.Drawing.Point(24, 16);
+            this.leftEyeBinkEnabledCheckBox.Name = "leftEyeBinkEnabledCheckBox";
+            this.leftEyeBinkEnabledCheckBox.Size = new System.Drawing.Size(127, 17);
+            this.leftEyeBinkEnabledCheckBox.TabIndex = 10;
+            this.leftEyeBinkEnabledCheckBox.Text = "Enable Left Eye Blink";
+            this.leftEyeBinkEnabledCheckBox.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -166,6 +178,29 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Left Eye Blink Inputs";
             // 
+            // leftEyeKeyRecorderDataGridView
+            // 
+            this.leftEyeKeyRecorderDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.leftEyeKeyRecorderDataGridView.ColumnHeadersVisible = false;
+            this.leftEyeKeyRecorderDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.leftEyeKeyRecorderDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.leftEyeKeyRecorderDataGridView.Location = new System.Drawing.Point(3, 16);
+            this.leftEyeKeyRecorderDataGridView.Name = "leftEyeKeyRecorderDataGridView";
+            this.leftEyeKeyRecorderDataGridView.RowHeadersVisible = false;
+            this.leftEyeKeyRecorderDataGridView.Size = new System.Drawing.Size(394, 281);
+            this.leftEyeKeyRecorderDataGridView.TabIndex = 0;
+            // 
+            // leftEyeKeyRecorderCheckBox
+            // 
+            this.leftEyeKeyRecorderCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.leftEyeKeyRecorderCheckBox.Location = new System.Drawing.Point(24, 58);
+            this.leftEyeKeyRecorderCheckBox.Name = "leftEyeKeyRecorderCheckBox";
+            this.leftEyeKeyRecorderCheckBox.Size = new System.Drawing.Size(175, 30);
+            this.leftEyeKeyRecorderCheckBox.TabIndex = 6;
+            this.leftEyeKeyRecorderCheckBox.Text = "⚫ Start Recording Key";
+            this.leftEyeKeyRecorderCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.leftEyeKeyRecorderCheckBox.UseVisualStyleBackColor = true;
+            // 
             // rightEyeTabPage
             // 
             this.rightEyeTabPage.Controls.Add(this.rightEyeBinkEnabledCheckBox);
@@ -181,6 +216,18 @@
             this.rightEyeTabPage.TabIndex = 1;
             this.rightEyeTabPage.Text = "Right Eye";
             this.rightEyeTabPage.UseVisualStyleBackColor = true;
+            // 
+            // rightEyeBinkEnabledCheckBox
+            // 
+            this.rightEyeBinkEnabledCheckBox.AutoSize = true;
+            this.rightEyeBinkEnabledCheckBox.Checked = global::EyeBind.Properties.Settings.Default.RightEyeBlinkEnabled;
+            this.rightEyeBinkEnabledCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EyeBind.Properties.Settings.Default, "RightEyeBlinkEnabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.rightEyeBinkEnabledCheckBox.Location = new System.Drawing.Point(24, 16);
+            this.rightEyeBinkEnabledCheckBox.Name = "rightEyeBinkEnabledCheckBox";
+            this.rightEyeBinkEnabledCheckBox.Size = new System.Drawing.Size(134, 17);
+            this.rightEyeBinkEnabledCheckBox.TabIndex = 10;
+            this.rightEyeBinkEnabledCheckBox.Text = "Enable Right Eye Blink";
+            this.rightEyeBinkEnabledCheckBox.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -259,29 +306,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Right Eye Blink Inputs";
             // 
-            // leftEyeKeyRecorderDataGridView
-            // 
-            this.leftEyeKeyRecorderDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.leftEyeKeyRecorderDataGridView.ColumnHeadersVisible = false;
-            this.leftEyeKeyRecorderDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.leftEyeKeyRecorderDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.leftEyeKeyRecorderDataGridView.Location = new System.Drawing.Point(3, 16);
-            this.leftEyeKeyRecorderDataGridView.Name = "leftEyeKeyRecorderDataGridView";
-            this.leftEyeKeyRecorderDataGridView.RowHeadersVisible = false;
-            this.leftEyeKeyRecorderDataGridView.Size = new System.Drawing.Size(394, 281);
-            this.leftEyeKeyRecorderDataGridView.TabIndex = 0;
-            // 
-            // leftEyeKeyRecorderCheckBox
-            // 
-            this.leftEyeKeyRecorderCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.leftEyeKeyRecorderCheckBox.Location = new System.Drawing.Point(24, 58);
-            this.leftEyeKeyRecorderCheckBox.Name = "leftEyeKeyRecorderCheckBox";
-            this.leftEyeKeyRecorderCheckBox.Size = new System.Drawing.Size(175, 30);
-            this.leftEyeKeyRecorderCheckBox.TabIndex = 6;
-            this.leftEyeKeyRecorderCheckBox.Text = "⚫ Start Recording Key";
-            this.leftEyeKeyRecorderCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.leftEyeKeyRecorderCheckBox.UseVisualStyleBackColor = true;
-            // 
             // rightEyeKeyRecorderDataGridView
             // 
             this.rightEyeKeyRecorderDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -305,36 +329,14 @@
             this.rightEyeKeyRecorderCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.rightEyeKeyRecorderCheckBox.UseVisualStyleBackColor = true;
             // 
-            // leftEyeBinkEnabledCheckBox
-            // 
-            this.leftEyeBinkEnabledCheckBox.AutoSize = true;
-            this.leftEyeBinkEnabledCheckBox.Checked = global::EyeBind.Properties.Settings.Default.LeftEyeBlinkEnabled;
-            this.leftEyeBinkEnabledCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EyeBind.Properties.Settings.Default, "LeftEyeBlinkEnabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.leftEyeBinkEnabledCheckBox.Location = new System.Drawing.Point(24, 16);
-            this.leftEyeBinkEnabledCheckBox.Name = "leftEyeBinkEnabledCheckBox";
-            this.leftEyeBinkEnabledCheckBox.Size = new System.Drawing.Size(127, 17);
-            this.leftEyeBinkEnabledCheckBox.TabIndex = 10;
-            this.leftEyeBinkEnabledCheckBox.Text = "Enable Left Eye Blink";
-            this.leftEyeBinkEnabledCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // rightEyeBinkEnabledCheckBox
-            // 
-            this.rightEyeBinkEnabledCheckBox.AutoSize = true;
-            this.rightEyeBinkEnabledCheckBox.Checked = global::EyeBind.Properties.Settings.Default.RightEyeBlinkEnabled;
-            this.rightEyeBinkEnabledCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::EyeBind.Properties.Settings.Default, "RightEyeBlinkEnabled", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.rightEyeBinkEnabledCheckBox.Location = new System.Drawing.Point(24, 16);
-            this.rightEyeBinkEnabledCheckBox.Name = "rightEyeBinkEnabledCheckBox";
-            this.rightEyeBinkEnabledCheckBox.Size = new System.Drawing.Size(134, 17);
-            this.rightEyeBinkEnabledCheckBox.TabIndex = 10;
-            this.rightEyeBinkEnabledCheckBox.Text = "Enable Right Eye Blink";
-            this.rightEyeBinkEnabledCheckBox.UseVisualStyleBackColor = true;
-            // 
             // BlinkConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(452, 542);
             this.Controls.Add(this.blinktabControl);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "BlinkConfig";
             this.Text = "BlinkConfig";
             this.blinktabControl.ResumeLayout(false);
@@ -344,13 +346,13 @@
             this.groupBox11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftEyeActivationDelayNumericUpDown)).EndInit();
             this.groupBox7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.leftEyeKeyRecorderDataGridView)).EndInit();
             this.rightEyeTabPage.ResumeLayout(false);
             this.rightEyeTabPage.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rightEyeActivationDelayNumericUpDown)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.leftEyeKeyRecorderDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rightEyeKeyRecorderDataGridView)).EndInit();
             this.ResumeLayout(false);
 

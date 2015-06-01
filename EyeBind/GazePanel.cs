@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EyeBind
@@ -13,7 +7,7 @@ namespace EyeBind
     public partial class GazePanel : UserControl
     {
         Color borderColor = Color.Empty;
-        int borderWidth = 5;
+        int borderWidth = 4;
 
         public int BorderWidth
         {

@@ -52,6 +52,12 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlRenderer">
+      <HintPath>..\packages\HtmlRenderer.Core.1.5.0.5\lib\net45\HtmlRenderer.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlRenderer.WinForms">
+      <HintPath>..\packages\HtmlRenderer.WinForms.1.5.0.6\lib\net45\HtmlRenderer.WinForms.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -90,12 +96,16 @@
     <Compile Include="EyeBindMainForm.Designer.cs">
       <DependentUpon>EyeBindMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GazeHtmlPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GazePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GazePanel.Designer.cs">
       <DependentUpon>GazePanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="GazeProfilesBindingList.cs" />
     <Compile Include="GazeRegionEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,6 +126,7 @@
     <Compile Include="GeneralSettingsDialog.Designer.cs">
       <DependentUpon>GeneralSettingsDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="HotkeyManager.cs" />
     <Compile Include="HotKeyTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -132,12 +143,26 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MouseMover.cs" />
+    <Compile Include="ProcessChecker.cs" />
+    <Compile Include="ProfileCloneDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfileCloneDialog.Designer.cs">
+      <DependentUpon>ProfileCloneDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProfileCloner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProfileCloner.Designer.cs">
+      <DependentUpon>ProfileCloner.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProfileEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ProfileEditor.Designer.cs">
       <DependentUpon>ProfileEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ProfileHotkeyEventArgs.cs" />
     <Compile Include="ProfilesComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -165,6 +190,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GeneralSettingsDialog.resx">
       <DependentUpon>GeneralSettingsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProfileCloneDialog.resx">
+      <DependentUpon>ProfileCloneDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProfileCloner.resx">
+      <DependentUpon>ProfileCloner.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProfileEditor.resx">
       <DependentUpon>ProfileEditor.cs</DependentUpon>

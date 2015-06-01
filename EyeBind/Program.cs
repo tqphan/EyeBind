@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using EyeXFramework;
 
@@ -9,6 +6,8 @@ namespace EyeBind
 {
     static class Program
     {
+        private static string eyeBindVersion = "1.2";
+        private static string eyeBindName = "EyeBind";
         private static EyeXHost _eyeXHost;
         private static EyeXFramework.GazePointDataStream gazePointDataStream = null;
         private static EyeXFramework.FixationDataStream fixationDataStream = null;
@@ -52,29 +51,32 @@ namespace EyeBind
         [STAThread]
         static void Main()
         {
-            try
+            if (ProcessChecker.IsOnlyProcess(eyeBindName))
             {
-                _eyeXHost = new EyeXHost();
-                _eyeXHost.Start();
-                gazePointDataStream = _eyeXHost.CreateGazePointDataStream(Tobii.EyeX.Framework.GazePointDataMode.LightlyFiltered);
-                fixationDataStream = _eyeXHost.CreateFixationDataStream(Tobii.EyeX.Framework.FixationDataMode.Slow);
-                eyePositionDataStream = _eyeXHost.CreateEyePositionDataStream();
+                try
+                {
+                    _eyeXHost = new EyeXHost();
+                    _eyeXHost.Start();
+                    gazePointDataStream = _eyeXHost.CreateGazePointDataStream(Tobii.EyeX.Framework.GazePointDataMode.LightlyFiltered);
+                    fixationDataStream = _eyeXHost.CreateFixationDataStream(Tobii.EyeX.Framework.FixationDataMode.Slow);
+                    eyePositionDataStream = _eyeXHost.CreateEyePositionDataStream();
+                }
+                catch
+                {
+                    MessageBox.Show("Fail to start EyeXHost.");
+                    return;
+                }
+
+
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+                Application.Run(new EyeBindMainForm());
+
+                gazePointDataStream.Dispose();
+                fixationDataStream.Dispose();
+                eyePositionDataStream.Dispose();
+                _eyeXHost.Dispose();
             }
-            catch
-            {
-                MessageBox.Show("Fail to start EyeXHost.");
-                return;
-            }
-
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new EyeBindMainForm());
-
-            gazePointDataStream.Dispose();
-            fixationDataStream.Dispose();
-            eyePositionDataStream.Dispose();
-            _eyeXHost.Dispose();
         }
     }
 }

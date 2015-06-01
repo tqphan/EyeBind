@@ -57,6 +57,8 @@ namespace EyeBind
             this.gazeEnterKeyRecorderCheckBox.KeyboardInputBindingList = this.gazeRegion.GazeEnterInputs;
             this.InitializeDataGridView(this.gazeExitInputsDataGridView, this.gazeRegion.GazeExitInputs);
             this.gazeExitKeyRecorderCheckBox.KeyboardInputBindingList = this.gazeRegion.GazeExitInputs;
+
+            this.htmlTextBox.Text = this.gazeRegion.HTML;
         }
 
         private void UnsetBindings()
@@ -82,6 +84,8 @@ namespace EyeBind
 
             this.gazeEnterInputsDataGridView.DataSource = null;
             this.gazeExitInputsDataGridView.DataSource = null;
+
+            this.gazeRegion.HTML = this.htmlTextBox.Text;
 
             this.gazeRegion = null;
         }
@@ -174,6 +178,11 @@ namespace EyeBind
         private void clearGazeExitKeyboardInputsButton_Click(object sender, EventArgs e)
         {
             this.gazeRegion.GazeExitInputs.Clear();
+        }
+
+        private void applyHtmlButton_Click(object sender, EventArgs e)
+        {
+            this.gazeRegion.HTML = this.htmlTextBox.Text;
         }
     }
 }

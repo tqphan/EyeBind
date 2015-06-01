@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace EyeBind
 {
     public class ProfilesComboBox : ComboBox
     {
+        public ProfilesComboBox()
+        {
+            this.DropDownStyle = ComboBoxStyle.DropDownList;
+        }
+
         public bool ShowSelectedProfile()
         {
             if (this.SelectedIndex > -1)
@@ -56,7 +58,7 @@ namespace EyeBind
 
         public bool RemoveSelectedProfile()
         {
-            if(this.SelectedIndex > 0)
+            if (this.SelectedIndex > 0)
             {
                 try
                 {
@@ -67,6 +69,11 @@ namespace EyeBind
 
                     grfl[this.SelectedIndex].RemoveGazeRegions();
                     grfl.RemoveAt(this.SelectedIndex);
+
+                    //select first item
+                    if (this.Items.Count >= 0)
+                        this.SelectedIndex = 0;
+
                     return true;
                 }
                 catch
@@ -74,47 +81,133 @@ namespace EyeBind
                     return false;
                 }
             }
-
-            //System.Media.SystemSounds.Beep.Play();
             return false;
         }
 
         public bool AddProfile()
         {
-            if (!string.IsNullOrEmpty(this.Text))
+            try
             {
-                int index = this.FindStringExact(this.Text);
-                if (index > -1)
+                using (ProfileEditor pe = new ProfileEditor("New Profile", Keys.None))
                 {
-                    this.SelectedIndex = index;
-                }
-                else
-                {
-                    try
+                    var result = pe.ShowDialog();
+                    if (result == DialogResult.OK)
                     {
-                        GazeRegionProfile grp = new GazeRegionProfile();
-                        grp.Name = this.Text;
-                        BindingList<GazeRegionProfile> grfl = this.DataSource as BindingList<GazeRegionProfile>;
-                        if (grfl == null)
+                        if (!string.IsNullOrEmpty(pe.ProfileName))
+                        {
+                            GazeRegionProfile grp = new GazeRegionProfile();
+                            grp.Name = pe.ProfileName;
+                            grp.Hotkey = pe.Hotkey;
+                            BindingList<GazeRegionProfile> grfl = this.DataSource as BindingList<GazeRegionProfile>;
+                            if (grfl == null)
+                                return false;
+
+                            grfl.Add(grp);
+
+                            //select last item
+                            if (this.Items.Count > 0)
+                                this.SelectedIndex = this.Items.Count - 1;
+
+                            return true;
+                        }
+                    }
+                    pe.Dispose();
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            return false;
+        }
+
+        public bool EditSelectedProfile()
+        {
+            if (this.SelectedIndex > -1)
+            {
+                BindingList<GazeRegionProfile> grfl = this.DataSource as BindingList<GazeRegionProfile>;
+                if (grfl == null)
+                    return false;
+
+                string name = grfl[this.SelectedIndex].Name;
+                Keys key = grfl[this.SelectedIndex].Hotkey;
+                using (ProfileEditor pe = new ProfileEditor(name, key))
+                {
+                    var result = pe.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        grfl[this.SelectedIndex].Name = pe.ProfileName;
+                        grfl[this.SelectedIndex].Hotkey = pe.Hotkey;
+
+                        Form f = FindForm();
+                        if (f is EyeBindMainForm == false)
                             return false;
 
-                        grfl.Add(grp);
+                        EyeBindMainForm ebmf = f as EyeBindMainForm;
+                        if (ebmf == null)
+                            return false;
+
+                        this.DataSource = null;
+                        this.DataSource = ebmf.ProfilesList;
+                        this.DisplayMember = "DisplayName";
+                    }
+                    pe.Dispose();
+                }
+            }
+            return false;
+        }
+
+        public bool CloneSelectedProfille()
+        {
+            if (this.SelectedIndex > -1)
+            {
+                BindingList<GazeRegionProfile> grfl = this.DataSource as BindingList<GazeRegionProfile>;
+                if (grfl == null)
+                    return false;
+
+                GazeRegionProfile grp = grfl[this.SelectedIndex];
+
+                List<string> regionNames = new List<string>();
+
+                foreach (GazeRegion gr in grp.Profile)
+                {
+                    regionNames.Add(gr.RegionName);
+                }
+
+                using (ProfileCloner pc = new ProfileCloner(regionNames, grp.Name))
+                {
+                    var result = pc.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        GazeRegionProfile ngrp = new GazeRegionProfile();
+
+                        if (grp.Profile.Count == pc.RegionsToClone.Count)
+                        {
+                            for(int i = 0; i < grp.Profile.Count; i++)
+                            {
+                                if (pc.RegionsToClone[i])
+                                    ngrp.Profile.Add(grp.Profile[i].Clone());
+                            }
+                        }
+                        else
+                        {
+                            pc.Dispose();
+                            return false;
+                        }
+
+                        ngrp.Name = pc.ProfileName;
+                        ngrp.Hotkey = pc.Hotkey;
+                        grfl.Add(ngrp);
 
                         //select last item
                         if (this.Items.Count > 0)
                             this.SelectedIndex = this.Items.Count - 1;
-
-                        return true;
-                    }
-                    catch
-                    {
-                        
                     }
 
+                    pc.Dispose();
                 }
             }
-
-            //System.Media.SystemSounds.Beep.Play();
             return false;
         }
 
@@ -124,7 +217,7 @@ namespace EyeBind
             if (this.SelectedIndex != -1)
             {
                 Form f = FindForm();
-                if(f is EyeBindMainForm == false)
+                if (f is EyeBindMainForm == false)
                     return;
 
                 EyeBindMainForm ebmf = f as EyeBindMainForm;
@@ -146,20 +239,6 @@ namespace EyeBind
                     }
                 }
             }
-        }
-
-        protected override bool ProcessCmdKey(ref Message msg, Keys k)
-        {
-            if (k == Keys.Enter || k == Keys.Return)
-            {
-                if(!string.IsNullOrEmpty(this.Text))
-                {
-                    this.AddProfile();
-                }                
-                return true;
-            }
-
-            return base.ProcessCmdKey(ref msg, k);
         }
     }
 }

@@ -71,7 +71,10 @@
             this.deactivationDelayNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.clearGazeExitKeyboardInputsButton = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.htmlTabPage = new System.Windows.Forms.TabPage();
+            this.htmlTextBox = new System.Windows.Forms.TextBox();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.applyHtmlButton = new System.Windows.Forms.Button();
             this.gazeEnterInputsDataGridView = new EyeBind.KeyRecorderDataGridView();
             this.gazeEnterKeyRecorderCheckBox = new EyeBind.KeyRecorderCheckBox();
             this.gazeExitInputsDataGridView = new EyeBind.KeyRecorderDataGridView();
@@ -102,6 +105,7 @@
             this.groupBox12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deactivationDelayNumericUpDown)).BeginInit();
             this.groupBox8.SuspendLayout();
+            this.htmlTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gazeEnterInputsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gazeExitInputsDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -112,6 +116,7 @@
             this.tabControl1.Controls.Add(this.AppearanceTabPage);
             this.tabControl1.Controls.Add(this.gazeEnterInputstabPage);
             this.tabControl1.Controls.Add(this.gazeExitInputsTabPage);
+            this.tabControl1.Controls.Add(this.htmlTabPage);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -478,9 +483,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(113, 9);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(236, 13);
+            this.label7.Size = new System.Drawing.Size(241, 13);
             this.label7.TabIndex = 4;
-            this.label7.Text = "All keyboard simulation are paused when editing.";
+            this.label7.Text = "All keyboard simulations are paused when editing.";
             // 
             // groupBox11
             // 
@@ -559,9 +564,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(113, 9);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(236, 13);
+            this.label8.Size = new System.Drawing.Size(241, 13);
             this.label8.TabIndex = 7;
-            this.label8.Text = "All keyboard simulation are paused when editing.";
+            this.label8.Text = "All keyboard simulations are paused when editing.";
             // 
             // groupBox12
             // 
@@ -621,6 +626,35 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Gaze Exit Inputs";
             // 
+            // htmlTabPage
+            // 
+            this.htmlTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.htmlTabPage.Controls.Add(this.applyHtmlButton);
+            this.htmlTabPage.Controls.Add(this.htmlTextBox);
+            this.htmlTabPage.Location = new System.Drawing.Point(4, 22);
+            this.htmlTabPage.Name = "htmlTabPage";
+            this.htmlTabPage.Size = new System.Drawing.Size(478, 559);
+            this.htmlTabPage.TabIndex = 4;
+            this.htmlTabPage.Text = "HTML";
+            // 
+            // htmlTextBox
+            // 
+            this.htmlTextBox.Location = new System.Drawing.Point(8, 13);
+            this.htmlTextBox.Multiline = true;
+            this.htmlTextBox.Name = "htmlTextBox";
+            this.htmlTextBox.Size = new System.Drawing.Size(462, 494);
+            this.htmlTextBox.TabIndex = 0;
+            // 
+            // applyHtmlButton
+            // 
+            this.applyHtmlButton.Location = new System.Drawing.Point(395, 513);
+            this.applyHtmlButton.Name = "applyHtmlButton";
+            this.applyHtmlButton.Size = new System.Drawing.Size(75, 23);
+            this.applyHtmlButton.TabIndex = 1;
+            this.applyHtmlButton.Text = "Apply";
+            this.applyHtmlButton.UseVisualStyleBackColor = true;
+            this.applyHtmlButton.Click += new System.EventHandler(this.applyHtmlButton_Click);
+            // 
             // gazeEnterInputsDataGridView
             // 
             this.gazeEnterInputsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -673,6 +707,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(486, 585);
             this.Controls.Add(this.tabControl1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "GazeRegionEditor";
             this.ShowInTaskbar = false;
             this.Text = "Gaze Region Editor";
@@ -711,6 +747,8 @@
             this.groupBox12.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deactivationDelayNumericUpDown)).EndInit();
             this.groupBox8.ResumeLayout(false);
+            this.htmlTabPage.ResumeLayout(false);
+            this.htmlTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gazeEnterInputsDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gazeExitInputsDataGridView)).EndInit();
             this.ResumeLayout(false);
@@ -767,5 +805,8 @@
         private System.Windows.Forms.Panel dockPanel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TabPage htmlTabPage;
+        private System.Windows.Forms.TextBox htmlTextBox;
+        private System.Windows.Forms.Button applyHtmlButton;
     }
 }

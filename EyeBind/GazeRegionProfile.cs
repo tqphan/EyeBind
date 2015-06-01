@@ -1,11 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace EyeBind
 {
-    public class GazeRegionProfile
+    public class GazeRegionProfile: INotifyPropertyChanged
     {
         private BindingList<GazeRegion> grl = new BindingList<GazeRegion>();
+        private const string defaultName = "Gaze Profile";
         private string name;
         private Keys hotkey = Keys.None;
 
@@ -15,7 +19,22 @@ namespace EyeBind
             {
                 return this.grl;
             }
-            
+        }
+
+        public Keys Hotkey
+        {
+            get
+            {
+                return this.hotkey;
+            }
+            set
+            {
+                if (value != this.hotkey)
+                {
+                    this.hotkey = value;
+                    NotifyPropertyChanged();
+                }
+            }
         }
 
         public string Name
@@ -30,6 +49,17 @@ namespace EyeBind
             }
         }
 
+        public string DisplayName
+        {
+            get
+            {
+                if(this.hotkey == Keys.None)
+                    return this.name;
+                else
+                    return (this.name + " (" + this.hotkey.ToString() + " )");
+            }
+        }
+
         public GazeRegionProfile()
             : base()
         {
@@ -37,7 +67,7 @@ namespace EyeBind
             this.name = string.Empty;
         }
 
-        public GazeRegionProfile(System.Xml.XmlNode xn)
+        public GazeRegionProfile(XmlNode xn)
             : this()
         {
             this.FromXml(xn);
@@ -90,34 +120,70 @@ namespace EyeBind
             }
         }
 
-        private void FromXml(System.Xml.XmlNode xn)
+        #region XML Read/Write
+        private void FromXml(XmlNode xn)
         {
-            this.Name = xn.Attributes["Name"].Value;
+            try
+            {
+                this.Name = xn.Attributes["Name"].Value;
+            }
+            catch
+            {
+                this.Name = defaultName;
+            }
+
+            try
+            {
+                Keys k;
+                if (Enum.TryParse(xn.Attributes["Hotkey"].Value, out k))
+                {
+                    this.Hotkey = k;
+                }
+            }
+            catch
+            {
+                this.Hotkey = Keys.None;
+            }
             
-            System.Xml.XmlNodeList grn = xn.ChildNodes; 
-            foreach(System.Xml.XmlNode n in grn)
+            XmlNodeList grn = xn.ChildNodes; 
+            foreach(XmlNode n in grn)
             {
                 this.grl.Add(new GazeRegion(n));
             }
         }
 
-        public System.Xml.XmlDocument ToXml()
+        public XmlDocument ToXml()
         {
 
-            System.Xml.XmlDocument xmlDoc = new System.Xml.XmlDocument();
+            XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.AppendChild(xmlDoc.CreateElement("GazeRegionProfile"));
             xmlDoc.DocumentElement.SetAttribute("Name", this.Name);
             xmlDoc.DocumentElement.SetAttribute("Hotkey", ((int)this.hotkey).ToString());
             
             foreach (GazeRegion gr in this.grl)
             {
-                System.Xml.XmlDocument xd = gr.ToXml();
-                System.Xml.XmlDocumentFragment xfrag = xmlDoc.CreateDocumentFragment();
+                XmlDocument xd = gr.ToXml();
+                XmlDocumentFragment xfrag = xmlDoc.CreateDocumentFragment();
                 xfrag.InnerXml = xd.OuterXml;
                 xmlDoc.DocumentElement.AppendChild(xfrag);
             }
 
             return xmlDoc;
         }
+        #endregion
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
     }
 }

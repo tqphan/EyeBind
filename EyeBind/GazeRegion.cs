@@ -52,12 +52,12 @@ namespace EyeBind
         private Color gazeEnterColor = Color.Empty;
         private Color gazeExitColor = Color.Empty;
         private readonly Color gazeEnterColorDefault = Color.LightSkyBlue;
-        private readonly Color gazeExitColorDefault = Color.Transparent;
+        private readonly Color gazeExitColorDefault = Color.White;
 
         private Color gazeActivationColor = Color.Empty;
         private Color gazeDeactivationColor = Color.Empty;
         private readonly Color gazeActivationColorDefault = Color.LightBlue;
-        private readonly Color gazeDeactivationColorDefault = Color.Transparent;
+        private readonly Color gazeDeactivationColorDefault = Color.White;
 
         private int activationDelay;
         private int deactivationDelay;
@@ -73,6 +73,9 @@ namespace EyeBind
 
         private KeyboardInputSimulator keyboardInputSimulator = new KeyboardInputSimulator();
         private GazePanel gazePanel = new GazePanel();
+        private GazeHtmlPanel htmlPanel = new GazeHtmlPanel();
+
+        private string html;
 
         #endregion
 
@@ -93,7 +96,10 @@ namespace EyeBind
             this.GazeActivationColor = gazeActivationColorDefault;
             this.GazeDeactivationColor = gazeDeactivationColorDefault;
 
+            this.gazePanel.BorderColor = gazeDeactivationColorDefault;
+
             this.Controls.Add(this.gazePanel);
+            this.gazePanel.Controls.Add(this.htmlPanel);
         }
 
         public GazeRegion(XmlNode xn): this()
@@ -124,6 +130,11 @@ namespace EyeBind
             clone.GazeDeactivationColor = this.GazeDeactivationColor;
             clone.ActivationDelay = this.ActivationDelay;
             clone.DeactivationDelay = this.DeactivationDelay;
+
+            clone.ActivationCooldown = this.ActivationCooldown;
+            clone.DeactivationCooldown = this.DeactivationCooldown;
+
+            clone.HTML = this.HTML;
 
             return clone;
         }
@@ -354,6 +365,23 @@ namespace EyeBind
                 {
                     this.deactivationCooldown = value;
                     NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public string HTML
+        {
+            get
+            {
+                return this.html;
+            }
+            set
+            {
+                if (value != this.html)
+                {
+                    this.html = value;
+                    NotifyPropertyChanged();
+                    this.htmlPanel.Text = value;
                 }
             }
         }
@@ -673,7 +701,20 @@ namespace EyeBind
             catch
             {
                 this.DeactivationCooldown = 0;
+                i = 0;
             }
+
+            try
+            {
+                n = xn.SelectSingleNode(".//HTML");
+                XmlCDataSection cDataNode = (XmlCDataSection)(n.ChildNodes[0]);
+                this.HTML = cDataNode.Data;
+            }
+            catch
+            {
+                this.HTML = string.Empty;
+            }
+
 
             n = xn.SelectSingleNode(".//KeyboardInputSimulator");
             this.keyboardInputSimulator = new KeyboardInputSimulator(n);
@@ -744,6 +785,11 @@ namespace EyeBind
             XmlElement deactivationCooldown = xmlDoc.CreateElement("DeactivationCooldown");
             deactivationCooldown.InnerText = this.DeactivationCooldown.ToString();
             root.AppendChild(deactivationCooldown);
+
+            XmlElement html = xmlDoc.CreateElement("HTML");
+            XmlCDataSection cdata = xmlDoc.CreateCDataSection(this.HTML);
+            html.AppendChild(cdata);
+            root.AppendChild(html);
 
             XmlDocument xd = this.keyboardInputSimulator.ToXml();
             XmlDocumentFragment xfrag = xmlDoc.CreateDocumentFragment();

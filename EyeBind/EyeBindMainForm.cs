@@ -9,12 +9,12 @@ namespace EyeBind
 {
     public partial class EyeBindMainForm : Form
     {
-        private KeyboardHookListener keyboardHookManager;
-        private BindingList<GazeRegionProfile> profilesList = new BindingList<GazeRegionProfile>();
+        private GazeProfilesBindingList<GazeRegionProfile> profilesList = new GazeProfilesBindingList<GazeRegionProfile>();
         private BlinkMonitor blinkMonitor;
         private MouseMover mouseMover = new MouseMover();
         private ScreenOverlay gazeMarkerTool;
 
+        #region Properties
         public GazeRegionsListBox GazeRegionsListBox
         {
             get
@@ -30,62 +30,75 @@ namespace EyeBind
                 return this.profilesList;
             }
         }
+        #endregion
 
         public EyeBindMainForm()
         {
             InitializeComponent();
-            
-            this.SetPauseSimulationCheckBoxText();
 
-            this.SetGlobalKeyboardHook();
+            this.SetPauseSimulationCheckBoxText();
 
             this.mouseMover.Enabled = true;
         }
 
         #region Global Keyboard Hook
-        private void SetGlobalKeyboardHook()
+        private void SetHotKeysHandlers()
         {
-            this.keyboardHookManager = new KeyboardHookListener(new GlobalHooker());
-            this.keyboardHookManager.Enabled = true;
-            this.keyboardHookManager.KeyUp += keyboardHookManager_KeyUp;
+            HotkeyManager.OnToggleSimulationHotkeyTriggered += OnToggleSimulationHotkeyTriggered;
+            HotkeyManager.OnToggleSoundHotkeyTriggered += OnToggleSoundHotkeyTriggered;
+            HotkeyManager.OnMouseMoveHotkeyTriggered += OnMouseMoveHotkeyTriggered;
+            HotkeyManager.OnToggleContinuousMouseMoveHotkeyTriggered += OnToggleContinuousMouseMoveHotkeyTriggered;
+            HotkeyManager.OnToggleGazeMarkerHotkeyTriggered += OnToggleGazeMarkerHotkeyTriggered;
+            HotkeyManager.OnProfileHotkeyTriggered += OnProfileHotkeyTriggered;
         }
 
-        private void keyboardHookManager_KeyUp(object sender, KeyEventArgs e)
+        private void OnProfileHotkeyTriggered(object sender, ProfileHotkeyEventArgs e)
         {
-            if(e.KeyData == Properties.Settings.Default.ToggleKeyboardSimulationHotKey)
+            try
             {
-                this.SetSimulationState(!GetSimulationState());
+                if (this.profilesComboBox.SelectedIndex != e.ProfileIndex)
+                    this.profilesComboBox.SelectedIndex = e.ProfileIndex;
             }
+            catch { }
+        }
 
-            if(e.KeyData == Properties.Settings.Default.MouseMoveHotKey)
-            {
-                this.mouseMover.MoveMouse();
-            }
+        public void OnToggleSoundHotkeyTriggered(object sender, EventArgs args)
+        {
+            Properties.Settings.Default.GlobalSoundEnabled = !Properties.Settings.Default.GlobalSoundEnabled;
+        }
 
-            if(e.KeyData == Properties.Settings.Default.ToggleSoundsHotKey)
-            {
-                Properties.Settings.Default.GlobalSoundEnabled = !Properties.Settings.Default.GlobalSoundEnabled;
-            }
+        public void OnToggleSimulationHotkeyTriggered(object sender, EventArgs args)
+        {
+            this.SetSimulationState(!GetSimulationState());
+        }
 
-            if (e.KeyData == Properties.Settings.Default.ToggleGazeMarkerHotKey)
-            {
-                this.gazeMarkerCheckBox.Checked = !this.gazeMarkerCheckBox.Checked;
-            }
+        public void OnMouseMoveHotkeyTriggered(object sender, EventArgs args)
+        {
+            this.mouseMover.MoveMouse();
+        }
 
-            if (e.KeyData == Properties.Settings.Default.ToggleContinuousMouseMoveHotKey)
-            {
-                this.mouseMover.ContinuousMouseMoveEnabled = !this.mouseMover.ContinuousMouseMoveEnabled;
-            }
+        public void OnToggleContinuousMouseMoveHotkeyTriggered(object sender, EventArgs args)
+        {
+            this.mouseMover.ContinuousMouseMoveEnabled = !this.mouseMover.ContinuousMouseMoveEnabled;
+        }
+
+        public void OnToggleGazeMarkerHotkeyTriggered(object sender, EventArgs args)
+        {
+            this.gazeMarkerCheckBox.Checked = !this.gazeMarkerCheckBox.Checked;
         }
         #endregion
 
         #region overrides
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             this.ActiveControl = null;
             this.LoadProfiles();
             this.LoadLastUsedProfile();
+
+            this.SetHotKeysHandlers();
+            HotkeyManager.Enabled = true;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -118,7 +131,7 @@ namespace EyeBind
                 string filePath = System.IO.Directory.GetCurrentDirectory();
                 filePath += "\\profile\\profile.xml";
 
-                if(!System.IO.File.Exists(filePath))
+                if (!System.IO.File.Exists(filePath))
                 {
                     this.LoadXmlFromResource(Properties.Resources.default_profile);
                     return;
@@ -158,7 +171,7 @@ namespace EyeBind
             }
 
             this.profilesComboBox.DataSource = this.profilesList;
-            this.profilesComboBox.DisplayMember = "Name";
+            this.profilesComboBox.DisplayMember = "DisplayName";
 
             this.blinkMonitor = new BlinkMonitor(xmlDoc.SelectSingleNode("/EyeBind/BlinkMonitor"));
             this.blinkMonitor.Enabled = true;
@@ -214,15 +227,31 @@ namespace EyeBind
 
         #endregion
 
-        #region Buttons Clicks
+        #region Buttons/Checkboxes Handlers
         private void newProfileButton_Click(object sender, EventArgs e)
         {
+            HotkeyManager.Enabled = false;
             this.profilesComboBox.AddProfile();
+            HotkeyManager.Enabled = true;
         }
 
         private void deleteProfileButton_Click(object sender, EventArgs e)
         {
             this.profilesComboBox.RemoveSelectedProfile();
+        }
+
+        private void editProfileButton_Click(object sender, EventArgs e)
+        {
+            HotkeyManager.Enabled = false;
+            this.profilesComboBox.EditSelectedProfile();
+            HotkeyManager.Enabled = true;
+        }
+
+        private void cloneProfileButton_Click(object sender, EventArgs e)
+        {
+            HotkeyManager.Enabled = false;
+            this.profilesComboBox.CloneSelectedProfille();
+            HotkeyManager.Enabled = true;
         }
 
         private void newGazeRegionButton_Click(object sender, EventArgs e)
@@ -237,12 +266,29 @@ namespace EyeBind
 
         private void editGazeRegionButton_Click(object sender, EventArgs e)
         {
+            HotkeyManager.Enabled = false;
             this.gazeRegionsListBox.EditSelectedGazeRegion();
+            HotkeyManager.Enabled = true;
         }
 
         private void cloneGazeRegionButton_Click(object sender, EventArgs e)
         {
             this.gazeRegionsListBox.CloneSelectedGazeRegion();
+        }
+
+        private void hideGazeRegionsButton_Click(object sender, EventArgs e)
+        {
+            this.profilesComboBox.HideSelectedProfile();
+        }
+
+        private void showGazeRegionsButton_Click(object sender, EventArgs e)
+        {
+            this.profilesComboBox.ShowSelectedProfile();
+        }
+
+        private void pauseSimulationCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.SetPauseSimulationCheckBoxText();
         }
 
         private void gazeMarkerCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -265,23 +311,15 @@ namespace EyeBind
             }
         }
 
-        private void hideGazeRegionsButton_Click(object sender, EventArgs e)
-        {
-            this.profilesComboBox.HideSelectedProfile();
-        }
-
-        private void showGazeRegionsButton_Click(object sender, EventArgs e)
-        {
-            this.profilesComboBox.ShowSelectedProfile();
-        }
-
         private void blinkButton_Click(object sender, EventArgs e)
         {
-            using(BlinkConfig bc = new BlinkConfig(this.blinkMonitor))
+            HotkeyManager.Enabled = false;
+            using (BlinkConfig bc = new BlinkConfig(this.blinkMonitor))
             {
                 bc.ShowDialog();
                 bc.Dispose();
             }
+            HotkeyManager.Enabled = true;
         }
 
         private void mouseMoverButton_Click(object sender, EventArgs e)
@@ -291,15 +329,14 @@ namespace EyeBind
 
         private void generalSettingsButton_Click(object sender, EventArgs e)
         {
+            HotkeyManager.Enabled = false;
             using (GeneralSettingsDialog gsd = new GeneralSettingsDialog())
             {
-                this.keyboardHookManager.Enabled = false;
                 gsd.ShowDialog();
                 gsd.Dispose();
-                this.keyboardHookManager.Enabled = true;
             }
+            HotkeyManager.Enabled = true;
         }
-        #endregion
 
         public void SetSimulationState(bool paused)
         {
@@ -313,7 +350,7 @@ namespace EyeBind
 
         private void SetPauseSimulationCheckBoxText()
         {
-            if(this.pauseSimulationCheckBox.Checked)
+            if (this.pauseSimulationCheckBox.Checked)
             {
                 this.pauseSimulationCheckBox.Text = "Resume Simulation";
             }
@@ -322,11 +359,12 @@ namespace EyeBind
                 this.pauseSimulationCheckBox.Text = "Pause Simulation";
             }
         }
+        #endregion
 
         #region last used profile
         private void LoadLastUsedProfile()
         {
-            if(Settings.Default.LastUsedProfileIndex > -1)
+            if (Settings.Default.LastUsedProfileIndex > -1)
             {
                 try
                 {
@@ -344,5 +382,7 @@ namespace EyeBind
             Settings.Default.LastUsedProfileIndex = this.profilesComboBox.SelectedIndex;
         }
         #endregion
+
+
     }
 }
