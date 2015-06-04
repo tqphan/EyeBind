@@ -3,19 +3,11 @@
 ####About:
 EyeBind is an open source keyboard simulator for the [Tobii EyeX](http://www.tobii.com/en/eye-experience/eyex/). It simulates keyboard inputs based on where you look. To understand what EyeBind does, let's first try to understand what the Tobii EyeX does. To put it simply, the Tobii EyeX functions like a second mouse pointer, continuously generating coordinate points of the screen where the user is looking. A region on the screen can be defined so that when these "gaze points" overlap a partcular region, keyboard input is simulated. 
 
-Binding keyboard operations to a region of the screen when certain input intersects with that region is nothing new. In fact, I have done it for years using my mouse and [AutoHotkey](http://ahkscript.org) even before owning an EyeX. However, the Tobii EyeX helps streamlined this process. 
-
 ####Basic useful feature list:
 
 * Assign various keyboard operations such as key down, key up, key press, and key toggle to any region on the screen.
 * Assign keyboard bindings to eyes blinks (left and/or right eye!).
 * Continuously move the mouse pointer to where you look.
-
-####Screenshots:
-![Image of EyeBind Main UI](https://i.imgur.com/lQulZvN.png)
-![Image of EyeBind General Settings](https://i.imgur.com/L7pB31m.png)
-
-For more screenshots, [click here.](https://imgur.com/a/v1jjX/all)
 
 ####Video:
 
@@ -25,13 +17,18 @@ A video demonstration of EyeBind will be added in the near future.
 
 Upon Launching EyeBind, the main window will appear:
 
-Click on the "New Profile" button to create a new profile. An optional hotkey can be assigned to quickly switch to this particular profile.
+![Image of EyeBind Main UI](https://raw.githubusercontent.com/tqphan/EyeBind/master/screenshots/EyeBindMainWindow.png)
 
-Click on the "New Gaze Region" button to create a "gaze-aware" window. Initially, this "Gaze Region" does nothing more than changing colors when you look at it, so let's configure it to do something useful. 
+Click on the "**New Profile**" button to create a new profile. An optional hotkey can be assigned to quickly switch to this particular profile.
 
-Select the newly created "Gaze Region" and click on "Edit Gaze Region."
+![Image of EyeBind Main UI](https://raw.githubusercontent.com/tqphan/EyeBind/master/screenshots/EyeBindProfileEditor.png)
 
-In the "Gaze Region Editor," Various options can be . Most options are self-explanatory 
+Click on the "**New Gaze Region**" button to create a "gaze-aware" window. 
+
+
+Initially, this "Gaze Region" does nothing more than changing colors when you look at it, so let's configure it to do something useful. Select the newly created "Gaze Region" and click on "**Edit Gaze Region**."
+
+In the "Gaze Region Editor" various options can be adjusted. Most options are self-explanatory; however, there are two important tabs that will be explained in details: "**Gaze Enter Inputs**" and "**Gaze Exit Inputs**." The primary function of EyeBind is to simulate keyboard inputs 
 
 ####Build Instructions:
 
