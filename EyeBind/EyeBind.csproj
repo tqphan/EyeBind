@@ -224,6 +224,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="resources\button_click_0.wav" />
     <None Include="resources\button_click_1.wav" />
     <None Include="resources\default.xml" />
