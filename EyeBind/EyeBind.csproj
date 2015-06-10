@@ -96,6 +96,7 @@
     <Compile Include="EyeBindMainForm.Designer.cs">
       <DependentUpon>EyeBindMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FirstPersonMouseMover.cs" />
     <Compile Include="GazeHtmlPanel.cs">
       <SubType>Component</SubType>
     </Compile>

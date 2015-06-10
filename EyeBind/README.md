@@ -1,4 +1,4 @@
-# EyeBind 
+#EyeBind 
 
 ####About:
 EyeBind is an open source keyboard simulator for the [Tobii EyeX](http://www.tobii.com/en/eye-experience/eyex/). It simulates keyboard inputs based on where you look. To understand what EyeBind does, let's first try to understand what the Tobii EyeX does. To put it simply, the Tobii EyeX functions like a second mouse pointer, continuously generating coordinate points of the screen where the user is looking. A region on the screen can be defined so that when these "gaze points" overlap a partcular region, keyboard input is simulated. 
@@ -19,20 +19,26 @@ Upon Launching EyeBind, the main window will appear:
 
 ![Image of EyeBind Main UI](https://raw.githubusercontent.com/tqphan/EyeBind/master/screenshots/EyeBindMainWindow.png)
 
-Click on the "**New Profile**" button to create a new profile. An optional hotkey can be assigned to quickly switch to this particular profile.
+Click on the **New Profile** button to create a new profile. An optional hotkey can be assigned to quickly switch to this particular profile.
 
-![Image of EyeBind Main UI](https://raw.githubusercontent.com/tqphan/EyeBind/master/screenshots/EyeBindProfileEditor.png)
+![Image of EyeBind Profile Editor](https://raw.githubusercontent.com/tqphan/EyeBind/master/screenshots/EyeBindProfileEditor.png)
 
-Click on the "**New Gaze Region**" button to create a "gaze-aware" window. 
+Click on the **New Gaze Region** button to create a "gaze-aware" window. 
 
+![Image of EyeBind Gaze Region](https://raw.githubusercontent.com/tqphan/EyeBind/master/screenshots/EyeBindGazeRegion.png)
 
-Initially, this "Gaze Region" does nothing more than changing colors when you look at it, so let's configure it to do something useful. Select the newly created "Gaze Region" and click on "**Edit Gaze Region**."
+Initially, this "Gaze Region" does nothing more than changing colors when you look at it, so let's configure it to do something useful. Select the newly created "Gaze Region" and click on the **Edit Gaze Region** button to open up the "Gaze Region Editor."
 
-In the "Gaze Region Editor" various options can be adjusted. Most options are self-explanatory; however, there are two important tabs that will be explained in details: "**Gaze Enter Inputs**" and "**Gaze Exit Inputs**." The primary function of EyeBind is to simulate keyboard inputs 
+![Image of EyeBind Gaze Editor](https://raw.githubusercontent.com/tqphan/EyeBind/master/screenshots/EyeBindRegionEditor-0.png)
+
+In the "Gaze Region Editor" various options can be adjusted. Most options are self-explanatory; however, there are two important tabs that will be explained in details: **Gaze Enter Inputs** and **Gaze Exit Inputs**. The primary function of this software is to simulate keyboard inputs when the user *looks at* a region, and optionally, separate keyboard inputs can be simulated when the user *looks away* from a region. 
+
+Under **Gaze Enter Inputs** tab is where you can define the keyboard inputs to be simulated when you *looks at* a region. Under **Gaze Exit Inputs** tab is where you can define the keyboard inputs to be simulated when you *looks away* from a region.
+
 
 ####Build Instructions:
 
-The EyeBind solution should build in Vistual Studio 2013 without any tweaking required. Be sure to copy the appropriate [Tobii.EyeX.Client library](http://developer.tobii.com/downloads/) to the output directory.
+The EyeBind solution should build in Vistual Studio 2013 without any tweaking required. Be sure to copy the appropriate [Tobii.EyeX.Client library](http://developer.tobii.com/downloads/) to the output directory. EyeBind uses several external open source libraries and all can be installed using [NuGet Packet Manager](https://www.nuget.org/). Scroll down to the end of this document for a complete list of external libraries.
 
 ####Download:
 
@@ -68,6 +74,4 @@ If you find EyeBind to be useful, send me an [e-mail](quoc@hush.ai). Feedbacks a
 * [freesfx](http://www.freesfx.co.uk) for sound effects.
 * [globalmousekeyhook](https://github.com/gmamaladze/globalmousekeyhook) for global hotkeys detections.
 * [HTML-Renderer](https://github.com/ArthurHub/HTML-Renderer) for HTML Rendering.
-
-
 
