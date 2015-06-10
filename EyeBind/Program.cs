@@ -6,7 +6,7 @@ namespace EyeBind
 {
     static class Program
     {
-        private static string eyeBindVersion = "1.2";
+        private static string eyeBindVersion = "1.3";
         private static string eyeBindName = "EyeBind";
         private static EyeXHost _eyeXHost;
         private static EyeXFramework.GazePointDataStream gazePointDataStream = null;
