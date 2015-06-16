@@ -14,6 +14,16 @@ namespace WindowsInput
         IKeyboardSimulator Keyboard { get; }
 
         /// <summary>
+        /// Gets the current X mouse location in pixels.
+        /// </summary>
+        int GetMousePositionX();
+
+        /// <summary>
+        /// Gets the current Y mouse location in pixels.
+        /// </summary>
+        int GetMousePositionY();
+
+        /// <summary>
         /// Simulates mouse movement by the specified distance measured as a delta from the current mouse location in pixels.
         /// </summary>
         /// <param name="pixelDeltaX">The distance in pixels to move the mouse horizontally.</param>

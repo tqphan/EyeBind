@@ -80,10 +80,7 @@ namespace WindowsInput
         /// </remarks>
         public static bool IsExtendedKey(VirtualKeyCode keyCode)
         {
-            if (keyCode == VirtualKeyCode.MENU ||
-                keyCode == VirtualKeyCode.LMENU ||
-                keyCode == VirtualKeyCode.RMENU ||
-                keyCode == VirtualKeyCode.CONTROL ||
+            if (keyCode == VirtualKeyCode.RMENU ||
                 keyCode == VirtualKeyCode.RCONTROL ||
                 keyCode == VirtualKeyCode.INSERT ||
                 keyCode == VirtualKeyCode.DELETE ||
@@ -98,7 +95,9 @@ namespace WindowsInput
                 keyCode == VirtualKeyCode.NUMLOCK ||
                 keyCode == VirtualKeyCode.CANCEL ||
                 keyCode == VirtualKeyCode.SNAPSHOT ||
-                keyCode == VirtualKeyCode.DIVIDE)
+                keyCode == VirtualKeyCode.DIVIDE ||
+                keyCode == VirtualKeyCode.APPS ||
+                keyCode == VirtualKeyCode.LWIN)
             {
                 return true;
             }
@@ -108,6 +107,13 @@ namespace WindowsInput
             }
         }
 
+        public static bool IsExtendedKey(UInt16 scancode)
+        {
+            if (((scancode >> 8) == 0xe0) || ((scancode >> 8) == 0xe1))
+                return true;
+            return false;
+        }
+
         /// <summary>
         /// Adds a key down to the list of <see cref="INPUT"/> messages.
         /// </summary>
@@ -115,6 +121,9 @@ namespace WindowsInput
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddKeyDown(VirtualKeyCode keyCode)
         {
+            UInt16 sc = 0;
+            if (keyCode != VirtualKeyCode.PAUSE)
+                sc = (UInt16)NativeMethods.MapVirtualKeyEx((UInt16)keyCode, (UInt16)(MapVirtualKeyMapTypes.MAPVK_VK_TO_VSC_EX), IntPtr.Zero);
             var down =
                 new INPUT
                     {
@@ -125,8 +134,8 @@ namespace WindowsInput
                                     new KEYBDINPUT
                                         {
                                             KeyCode = (UInt16) keyCode,
-                                            Scan = (UInt16)NativeMethods.MapVirtualKeyEx((UInt16)keyCode, (UInt16)(MapVirtualKeyMapTypes.MAPVK_VK_TO_VSC), IntPtr.Zero),
-                                            Flags = IsExtendedKey(keyCode) ? (UInt32) KeyboardFlag.ExtendedKey : 0,
+                                            Scan = sc,
+                                            Flags = IsExtendedKey(keyCode) ? (UInt32)KeyboardFlag.ExtendedKey : 0,
                                             Time = 0,
                                             ExtraInfo = IntPtr.Zero
                                         }
@@ -144,6 +153,10 @@ namespace WindowsInput
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
         public InputBuilder AddKeyUp(VirtualKeyCode keyCode)
         {
+            UInt16 sc = 0;
+            if (keyCode != VirtualKeyCode.PAUSE)
+                sc = (UInt16)NativeMethods.MapVirtualKeyEx((UInt16)keyCode, (UInt16)(MapVirtualKeyMapTypes.MAPVK_VK_TO_VSC_EX), IntPtr.Zero);
+
             var up =
                 new INPUT
                     {
@@ -154,8 +167,8 @@ namespace WindowsInput
                                     new KEYBDINPUT
                                         {
                                             KeyCode = (UInt16) keyCode,
-                                            Scan = (UInt16)NativeMethods.MapVirtualKeyEx((UInt16)keyCode, (UInt16)(MapVirtualKeyMapTypes.MAPVK_VK_TO_VSC), IntPtr.Zero),
-                                            Flags = (UInt32) (IsExtendedKey(keyCode)
+                                            Scan = sc,
+                                            Flags = (UInt32)(IsExtendedKey(keyCode)
                                                                   ? KeyboardFlag.KeyUp | KeyboardFlag.ExtendedKey
                                                                   : KeyboardFlag.KeyUp),
                                             Time = 0,
@@ -286,12 +299,12 @@ namespace WindowsInput
         /// <param name="absoluteX"></param>
         /// <param name="absoluteY"></param>
         /// <returns>This <see cref="InputBuilder"/> instance.</returns>
-        public InputBuilder AddAbsoluteMouseMovement(int absoluteX, int absoluteY)
+        public InputBuilder AddAbsoluteMouseMovement(double absoluteX, double absoluteY)
         {
             var movement = new INPUT { Type = (UInt32)InputType.Mouse };
             movement.Data.Mouse.Flags = (UInt32)(MouseFlag.Move | MouseFlag.Absolute);
-            movement.Data.Mouse.X = absoluteX;
-            movement.Data.Mouse.Y = absoluteY;
+            movement.Data.Mouse.X = NormalizedX(absoluteX);
+            movement.Data.Mouse.Y = NormalizedY(absoluteY);
 
             _inputList.Add(movement);
 
@@ -481,6 +494,25 @@ namespace WindowsInput
                 default:
                     return MouseFlag.LeftUp;
             }
+        }
+
+        private static int NormalizedX(double x)
+        {
+            int screenWidth = Native.NativeMethods.GetSystemMetrics(SystemMetric.SM_CXSCREEN);
+            double nX = 0;
+            if (screenWidth != 0)
+                nX = Math.Ceiling(x * (double)65536 / (double)screenWidth);
+            return (int)nX;
+        }
+
+
+        private static int NormalizedY(double y)
+        {
+            int screenWidth = Native.NativeMethods.GetSystemMetrics(SystemMetric.SM_CYSCREEN);
+            double nY = 0;
+            if (screenWidth != 0)
+                nY = Math.Ceiling(y * (double)65536 / (double)screenWidth);
+            return (int)nY;
         }
     }
 }

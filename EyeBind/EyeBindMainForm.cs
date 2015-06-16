@@ -65,6 +65,10 @@ namespace EyeBind
         public void OnToggleSoundHotkeyTriggered(object sender, EventArgs args)
         {
             Properties.Settings.Default.GlobalSoundEnabled = !Properties.Settings.Default.GlobalSoundEnabled;
+            //var isi = new WindowsInput.InputSimulator();
+            //WindowsInput.MouseSimulator ms = new WindowsInput.MouseSimulator(isi);
+            //ms.MoveMouseTo(400, 100);
+
         }
 
         public void OnToggleSimulationHotkeyTriggered(object sender, EventArgs args)

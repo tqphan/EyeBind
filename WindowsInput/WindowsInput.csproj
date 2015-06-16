@@ -72,6 +72,8 @@
     <Compile Include="Native\MouseFlag.cs" />
     <Compile Include="Native\MOUSEINPUT.cs" />
     <Compile Include="Native\MOUSEKEYBDHARDWAREINPUT.cs" />
+    <Compile Include="Native\POINT.cs" />
+    <Compile Include="Native\SystemMetric.cs" />
     <Compile Include="WindowsInputDeviceStateAdaptor.cs" />
     <Compile Include="WindowsInputMessageDispatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

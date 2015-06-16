@@ -66,6 +66,25 @@ namespace WindowsInput
         }
 
         /// <summary>
+        /// Gets the current X mouse location in pixels.
+        /// </summary>
+        public int GetMousePositionX()
+        {
+            POINT p;
+            Native.NativeMethods.GetCursorPos(out p);
+            return p.X;
+        }
+        /// <summary>
+        /// Gets the current Y mouse location in pixels.
+        /// </summary>
+        public int GetMousePositionY()
+        {
+            POINT p;
+            Native.NativeMethods.GetCursorPos(out p);
+            return p.Y;
+        }
+
+        /// <summary>
         /// Simulates mouse movement by the specified distance measured as a delta from the current mouse location in pixels.
         /// </summary>
         /// <param name="pixelDeltaX">The distance in pixels to move the mouse horizontally.</param>
@@ -84,7 +103,7 @@ namespace WindowsInput
         /// <param name="absoluteY">The destination's absolute Y-coordinate on the primary display device where 0 is the top of the display device and 65535 is the bottom of the display device.</param>
         public IMouseSimulator MoveMouseTo(double absoluteX, double absoluteY)
         {
-            var inputList = new InputBuilder().AddAbsoluteMouseMovement((int)Math.Truncate(absoluteX), (int)Math.Truncate(absoluteY)).ToArray();
+            var inputList = new InputBuilder().AddAbsoluteMouseMovement(absoluteX, absoluteY).ToArray();
             SendSimulatedInput(inputList);
             return this;
         }
