@@ -12,17 +12,20 @@ namespace EyeBind
 {
     public partial class BlinkConfig : Form
     {
-        private BlinkMonitor blinkMonitor;
+        private EyeSetting leftEyeSetting = new EyeSetting();
+        private EyeSetting rightEyeSetting = new EyeSetting();
 
         public BlinkConfig()
         {
             InitializeComponent();
-            this.StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterParent;
         }
 
-        public BlinkConfig(BlinkMonitor bm): this()
+        public BlinkConfig(EyeSetting left, EyeSetting right)
+            : this()
         {
-            this.blinkMonitor = bm;
+            leftEyeSetting = left;
+            rightEyeSetting = right;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -40,24 +43,32 @@ namespace EyeBind
 
         private void SetBindings()
         {
-            this.leftEyeActivationDelayNumericUpDown.DataBindings.Add(new CustomBinding("Value", this.blinkMonitor.LeftEye, "EyeCloseActivationDelay", new IntDecimalConverter()));
-            this.rightEyeActivationDelayNumericUpDown.DataBindings.Add(new CustomBinding("Value", this.blinkMonitor.RightEye, "EyeCloseActivationDelay", new IntDecimalConverter()));
+            leftEyeActivationDelayNumericUpDown.DataBindings.Add(new CustomBinding("Value", leftEyeSetting, "EyeCloseActivationDelay", new IntDecimalConverter()));
+            rightEyeActivationDelayNumericUpDown.DataBindings.Add(new CustomBinding("Value", rightEyeSetting, "EyeCloseActivationDelay", new IntDecimalConverter()));
 
-            this.InitializeDataGridView(this.leftEyeKeyRecorderDataGridView, this.blinkMonitor.LeftEye.EyeInputs);
-            this.leftEyeKeyRecorderCheckBox.KeyboardInputBindingList = this.blinkMonitor.LeftEye.EyeInputs;
-            this.InitializeDataGridView(this.rightEyeKeyRecorderDataGridView, this.blinkMonitor.RightEye.EyeInputs);
-            this.rightEyeKeyRecorderCheckBox.KeyboardInputBindingList = this.blinkMonitor.RightEye.EyeInputs;
+            leftEyeBinkEnabledCheckBox.DataBindings.Add("Checked", leftEyeSetting, "Enabled", false, DataSourceUpdateMode.OnPropertyChanged);
+            rightEyeBinkEnabledCheckBox.DataBindings.Add("Checked", rightEyeSetting, "Enabled", false, DataSourceUpdateMode.OnPropertyChanged);
+
+            InitializeDataGridView(leftEyeKeyRecorderDataGridView, leftEyeSetting.EyeCloseInputs);
+            leftEyeKeyRecorderCheckBox.KeyboardInputBindingList = leftEyeSetting.EyeCloseInputs;
+
+            InitializeDataGridView(rightEyeKeyRecorderDataGridView, rightEyeSetting.EyeCloseInputs);
+            rightEyeKeyRecorderCheckBox.KeyboardInputBindingList = rightEyeSetting.EyeCloseInputs;
         }
 
         private void UnsetBindings()
         {
-            this.leftEyeActivationDelayNumericUpDown.DataBindings.Clear();
-            this.rightEyeActivationDelayNumericUpDown.DataBindings.Clear();
+            leftEyeActivationDelayNumericUpDown.DataBindings.Clear();
+            rightEyeActivationDelayNumericUpDown.DataBindings.Clear();
 
-            this.leftEyeKeyRecorderDataGridView.DataSource = null;
-            this.rightEyeKeyRecorderDataGridView.DataSource = null;
+            leftEyeBinkEnabledCheckBox.DataBindings.Clear();
+            rightEyeBinkEnabledCheckBox.DataBindings.Clear();
 
-            this.blinkMonitor = null;
+            leftEyeKeyRecorderDataGridView.DataSource = null;
+            rightEyeKeyRecorderDataGridView.DataSource = null;
+
+            leftEyeSetting = null;
+            rightEyeSetting = null;
         }
 
         private void InitializeDataGridView(KeyRecorderDataGridView krdgv, BindingList<KeyboardInput> blki)
@@ -91,12 +102,12 @@ namespace EyeBind
 
         private void leftEyeClearInputsButton_Click(object sender, EventArgs e)
         {
-            this.blinkMonitor.LeftEye.EyeInputs.Clear();
+            leftEyeSetting.EyeCloseInputs.Clear();
         }
 
         private void rightEyeClearInputsButton_Click(object sender, EventArgs e)
         {
-            this.blinkMonitor.RightEye.EyeInputs.Clear();
+            rightEyeSetting.EyeCloseInputs.Clear();
         }
     }
 }

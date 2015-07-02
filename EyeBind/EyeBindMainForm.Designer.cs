@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EyeBindMainForm));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.deleteProfileButton = new System.Windows.Forms.Button();
             this.profilesComboBox = new EyeBind.ProfilesComboBox();
@@ -249,7 +250,7 @@
             this.blinkButton.Name = "blinkButton";
             this.blinkButton.Size = new System.Drawing.Size(117, 32);
             this.blinkButton.TabIndex = 12;
-            this.blinkButton.Text = "Blink Monitor";
+            this.blinkButton.Text = "Blink Setting";
             this.blinkButton.UseVisualStyleBackColor = true;
             this.blinkButton.Click += new System.EventHandler(this.blinkButton_Click);
             // 
@@ -308,6 +309,7 @@
             this.ClientSize = new System.Drawing.Size(234, 448);
             this.Controls.Add(this.tableLayoutPanel);
             this.DataBindings.Add(new System.Windows.Forms.Binding("TopMost", global::EyeBind.Properties.Settings.Default, "mainWindowTopMost", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "EyeBindMainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

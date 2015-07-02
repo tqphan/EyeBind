@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GazeRegionEditor));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.positioningTabPage = new System.Windows.Forms.TabPage();
             this.dockPanel = new System.Windows.Forms.Panel();
@@ -64,6 +65,8 @@
             this.activationDelayNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.clearGazeEnterKeyboardInputsButton = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.gazeEnterInputsDataGridView = new EyeBind.KeyRecorderDataGridView();
+            this.gazeEnterKeyRecorderCheckBox = new EyeBind.KeyRecorderCheckBox();
             this.gazeExitInputsTabPage = new System.Windows.Forms.TabPage();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
@@ -71,14 +74,12 @@
             this.deactivationDelayNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.clearGazeExitKeyboardInputsButton = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.htmlTabPage = new System.Windows.Forms.TabPage();
-            this.htmlTextBox = new System.Windows.Forms.TextBox();
-            this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.applyHtmlButton = new System.Windows.Forms.Button();
-            this.gazeEnterInputsDataGridView = new EyeBind.KeyRecorderDataGridView();
-            this.gazeEnterKeyRecorderCheckBox = new EyeBind.KeyRecorderCheckBox();
             this.gazeExitInputsDataGridView = new EyeBind.KeyRecorderDataGridView();
             this.gazeExitKeyRecorderCheckBox = new EyeBind.KeyRecorderCheckBox();
+            this.htmlTabPage = new System.Windows.Forms.TabPage();
+            this.applyHtmlButton = new System.Windows.Forms.Button();
+            this.htmlTextBox = new System.Windows.Forms.TextBox();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.tabControl1.SuspendLayout();
             this.positioningTabPage.SuspendLayout();
             this.dockPanel.SuspendLayout();
@@ -101,13 +102,13 @@
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.activationDelayNumericUpDown)).BeginInit();
             this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gazeEnterInputsDataGridView)).BeginInit();
             this.gazeExitInputsTabPage.SuspendLayout();
             this.groupBox12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deactivationDelayNumericUpDown)).BeginInit();
             this.groupBox8.SuspendLayout();
-            this.htmlTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gazeEnterInputsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gazeExitInputsDataGridView)).BeginInit();
+            this.htmlTabPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -545,6 +546,29 @@
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Gaze Enter Inputs";
             // 
+            // gazeEnterInputsDataGridView
+            // 
+            this.gazeEnterInputsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gazeEnterInputsDataGridView.ColumnHeadersVisible = false;
+            this.gazeEnterInputsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gazeEnterInputsDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.gazeEnterInputsDataGridView.Location = new System.Drawing.Point(3, 16);
+            this.gazeEnterInputsDataGridView.Name = "gazeEnterInputsDataGridView";
+            this.gazeEnterInputsDataGridView.RowHeadersVisible = false;
+            this.gazeEnterInputsDataGridView.Size = new System.Drawing.Size(394, 281);
+            this.gazeEnterInputsDataGridView.TabIndex = 0;
+            // 
+            // gazeEnterKeyRecorderCheckBox
+            // 
+            this.gazeEnterKeyRecorderCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.gazeEnterKeyRecorderCheckBox.Location = new System.Drawing.Point(42, 42);
+            this.gazeEnterKeyRecorderCheckBox.Name = "gazeEnterKeyRecorderCheckBox";
+            this.gazeEnterKeyRecorderCheckBox.Size = new System.Drawing.Size(152, 30);
+            this.gazeEnterKeyRecorderCheckBox.TabIndex = 1;
+            this.gazeEnterKeyRecorderCheckBox.Text = "⚫ Start Recording Key";
+            this.gazeEnterKeyRecorderCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.gazeEnterKeyRecorderCheckBox.UseVisualStyleBackColor = true;
+            // 
             // gazeExitInputsTabPage
             // 
             this.gazeExitInputsTabPage.BackColor = System.Drawing.SystemColors.Control;
@@ -626,58 +650,6 @@
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Gaze Exit Inputs";
             // 
-            // htmlTabPage
-            // 
-            this.htmlTabPage.BackColor = System.Drawing.SystemColors.Control;
-            this.htmlTabPage.Controls.Add(this.applyHtmlButton);
-            this.htmlTabPage.Controls.Add(this.htmlTextBox);
-            this.htmlTabPage.Location = new System.Drawing.Point(4, 22);
-            this.htmlTabPage.Name = "htmlTabPage";
-            this.htmlTabPage.Size = new System.Drawing.Size(478, 559);
-            this.htmlTabPage.TabIndex = 4;
-            this.htmlTabPage.Text = "HTML";
-            // 
-            // htmlTextBox
-            // 
-            this.htmlTextBox.Location = new System.Drawing.Point(8, 13);
-            this.htmlTextBox.Multiline = true;
-            this.htmlTextBox.Name = "htmlTextBox";
-            this.htmlTextBox.Size = new System.Drawing.Size(462, 494);
-            this.htmlTextBox.TabIndex = 0;
-            // 
-            // applyHtmlButton
-            // 
-            this.applyHtmlButton.Location = new System.Drawing.Point(395, 513);
-            this.applyHtmlButton.Name = "applyHtmlButton";
-            this.applyHtmlButton.Size = new System.Drawing.Size(75, 23);
-            this.applyHtmlButton.TabIndex = 1;
-            this.applyHtmlButton.Text = "Apply";
-            this.applyHtmlButton.UseVisualStyleBackColor = true;
-            this.applyHtmlButton.Click += new System.EventHandler(this.applyHtmlButton_Click);
-            // 
-            // gazeEnterInputsDataGridView
-            // 
-            this.gazeEnterInputsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gazeEnterInputsDataGridView.ColumnHeadersVisible = false;
-            this.gazeEnterInputsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gazeEnterInputsDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.gazeEnterInputsDataGridView.Location = new System.Drawing.Point(3, 16);
-            this.gazeEnterInputsDataGridView.Name = "gazeEnterInputsDataGridView";
-            this.gazeEnterInputsDataGridView.RowHeadersVisible = false;
-            this.gazeEnterInputsDataGridView.Size = new System.Drawing.Size(394, 281);
-            this.gazeEnterInputsDataGridView.TabIndex = 0;
-            // 
-            // gazeEnterKeyRecorderCheckBox
-            // 
-            this.gazeEnterKeyRecorderCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.gazeEnterKeyRecorderCheckBox.Location = new System.Drawing.Point(42, 42);
-            this.gazeEnterKeyRecorderCheckBox.Name = "gazeEnterKeyRecorderCheckBox";
-            this.gazeEnterKeyRecorderCheckBox.Size = new System.Drawing.Size(152, 30);
-            this.gazeEnterKeyRecorderCheckBox.TabIndex = 1;
-            this.gazeEnterKeyRecorderCheckBox.Text = "⚫ Start Recording Key";
-            this.gazeEnterKeyRecorderCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.gazeEnterKeyRecorderCheckBox.UseVisualStyleBackColor = true;
-            // 
             // gazeExitInputsDataGridView
             // 
             this.gazeExitInputsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -701,12 +673,42 @@
             this.gazeExitKeyRecorderCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.gazeExitKeyRecorderCheckBox.UseVisualStyleBackColor = true;
             // 
+            // htmlTabPage
+            // 
+            this.htmlTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.htmlTabPage.Controls.Add(this.applyHtmlButton);
+            this.htmlTabPage.Controls.Add(this.htmlTextBox);
+            this.htmlTabPage.Location = new System.Drawing.Point(4, 22);
+            this.htmlTabPage.Name = "htmlTabPage";
+            this.htmlTabPage.Size = new System.Drawing.Size(478, 559);
+            this.htmlTabPage.TabIndex = 4;
+            this.htmlTabPage.Text = "HTML";
+            // 
+            // applyHtmlButton
+            // 
+            this.applyHtmlButton.Location = new System.Drawing.Point(395, 513);
+            this.applyHtmlButton.Name = "applyHtmlButton";
+            this.applyHtmlButton.Size = new System.Drawing.Size(75, 23);
+            this.applyHtmlButton.TabIndex = 1;
+            this.applyHtmlButton.Text = "Apply";
+            this.applyHtmlButton.UseVisualStyleBackColor = true;
+            this.applyHtmlButton.Click += new System.EventHandler(this.applyHtmlButton_Click);
+            // 
+            // htmlTextBox
+            // 
+            this.htmlTextBox.Location = new System.Drawing.Point(8, 13);
+            this.htmlTextBox.Multiline = true;
+            this.htmlTextBox.Name = "htmlTextBox";
+            this.htmlTextBox.Size = new System.Drawing.Size(462, 494);
+            this.htmlTextBox.TabIndex = 0;
+            // 
             // GazeRegionEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(486, 585);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GazeRegionEditor";
@@ -741,16 +743,16 @@
             this.groupBox11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.activationDelayNumericUpDown)).EndInit();
             this.groupBox7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gazeEnterInputsDataGridView)).EndInit();
             this.gazeExitInputsTabPage.ResumeLayout(false);
             this.gazeExitInputsTabPage.PerformLayout();
             this.groupBox12.ResumeLayout(false);
             this.groupBox12.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deactivationDelayNumericUpDown)).EndInit();
             this.groupBox8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gazeExitInputsDataGridView)).EndInit();
             this.htmlTabPage.ResumeLayout(false);
             this.htmlTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gazeEnterInputsDataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gazeExitInputsDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }

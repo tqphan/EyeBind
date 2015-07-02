@@ -14,6 +14,12 @@ namespace WindowsInput
         IKeyboardSimulator Keyboard { get; }
 
         /// <summary>
+        /// Gets the current mouse location in pixels.
+        /// </summary>
+        void GetMousePosition(ref double x, ref double y);
+
+
+        /// <summary>
         /// Gets the current X mouse location in pixels.
         /// </summary>
         int GetMousePositionX();

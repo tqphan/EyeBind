@@ -10,8 +10,6 @@ namespace EyeBind
     public partial class EyeBindMainForm : Form
     {
         private GazeProfilesBindingList<GazeRegionProfile> profilesList = new GazeProfilesBindingList<GazeRegionProfile>();
-        private BlinkMonitor blinkMonitor;
-        private MouseMover mouseMover = new MouseMover();
         private ScreenOverlay gazeMarkerTool;
 
         #region Properties
@@ -37,8 +35,6 @@ namespace EyeBind
             InitializeComponent();
 
             this.SetPauseSimulationCheckBoxText();
-
-            this.mouseMover.Enabled = true;
         }
 
         #region Global Keyboard Hook
@@ -65,10 +61,6 @@ namespace EyeBind
         public void OnToggleSoundHotkeyTriggered(object sender, EventArgs args)
         {
             Properties.Settings.Default.GlobalSoundEnabled = !Properties.Settings.Default.GlobalSoundEnabled;
-            //var isi = new WindowsInput.InputSimulator();
-            //WindowsInput.MouseSimulator ms = new WindowsInput.MouseSimulator(isi);
-            //ms.MoveMouseTo(400, 100);
-
         }
 
         public void OnToggleSimulationHotkeyTriggered(object sender, EventArgs args)
@@ -78,12 +70,12 @@ namespace EyeBind
 
         public void OnMouseMoveHotkeyTriggered(object sender, EventArgs args)
         {
-            this.mouseMover.MoveMouse();
+            MouseMover.MoveMouse();
         }
 
         public void OnToggleContinuousMouseMoveHotkeyTriggered(object sender, EventArgs args)
         {
-            this.mouseMover.ContinuousMouseMoveEnabled = !this.mouseMover.ContinuousMouseMoveEnabled;
+            MouseMover.ContinuousMouseMoveEnabled = !MouseMover.ContinuousMouseMoveEnabled;
         }
 
         public void OnToggleGazeMarkerHotkeyTriggered(object sender, EventArgs args)
@@ -100,7 +92,8 @@ namespace EyeBind
             this.ActiveControl = null;
             this.LoadProfiles();
             this.LoadLastUsedProfile();
-
+            BlinkDetector.Enabled = true;
+            MouseMover.Enabled = true;
             this.SetHotKeysHandlers();
             HotkeyManager.Enabled = true;
         }
@@ -108,6 +101,9 @@ namespace EyeBind
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnClosing(e);
+            HotkeyManager.Enabled = false;
+            BlinkDetector.Enabled = false;
+            MouseMover.Enabled = false;
             this.SaveProfiles("profile.xml");
             this.SaveLastUsedProfile();
             Properties.Settings.Default.Save();
@@ -176,9 +172,6 @@ namespace EyeBind
 
             this.profilesComboBox.DataSource = this.profilesList;
             this.profilesComboBox.DisplayMember = "DisplayName";
-
-            this.blinkMonitor = new BlinkMonitor(xmlDoc.SelectSingleNode("/EyeBind/BlinkMonitor"));
-            this.blinkMonitor.Enabled = true;
         }
 
         private bool SaveProfiles(string fileName)
@@ -198,11 +191,6 @@ namespace EyeBind
                     xfrag.InnerXml = xd.OuterXml;
                     xmlDoc.DocumentElement.AppendChild(xfrag);
                 }
-
-                xd = this.blinkMonitor.ToXml();
-                xfrag = xmlDoc.CreateDocumentFragment();
-                xfrag.InnerXml = xd.OuterXml;
-                xmlDoc.DocumentElement.AppendChild(xfrag);
 
                 string currentDir = System.IO.Directory.GetCurrentDirectory();
                 currentDir += @"\profile\";
@@ -318,17 +306,19 @@ namespace EyeBind
         private void blinkButton_Click(object sender, EventArgs e)
         {
             HotkeyManager.Enabled = false;
-            using (BlinkConfig bc = new BlinkConfig(this.blinkMonitor))
-            {
-                bc.ShowDialog();
-                bc.Dispose();
-            }
+            this.profilesComboBox.EditSelectedProfileBlinkSetting();
             HotkeyManager.Enabled = true;
         }
 
         private void mouseMoverButton_Click(object sender, EventArgs e)
         {
-            this.mouseMover.ContinuousMouseMoveEnabled = !this.mouseMover.ContinuousMouseMoveEnabled;
+            HotkeyManager.Enabled = false;
+            using (MouseMoverSettingsDialog mmsd = new MouseMoverSettingsDialog())
+            {
+                mmsd.ShowDialog();
+                mmsd.Dispose();
+            }
+            HotkeyManager.Enabled = true;
         }
 
         private void generalSettingsButton_Click(object sender, EventArgs e)

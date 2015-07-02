@@ -232,6 +232,8 @@ namespace EyeBind
                         ebmf.GazeRegionsListBox.DataSource = null;
                         ebmf.GazeRegionsListBox.DataSource = ebmf.ProfilesList[i].Profile;
                         ebmf.GazeRegionsListBox.DisplayMember = "RegionName";
+
+                        BlinkDetector.ChangeBlinkSetting(ebmf.ProfilesList[i].LeftEyeSetting, ebmf.ProfilesList[i].RightEyeSetting);
                     }
                     else
                     {
@@ -239,6 +241,46 @@ namespace EyeBind
                     }
                 }
             }
+        }
+
+        public bool EditSelectedProfileBlinkSetting()
+        {
+            if (this.SelectedIndex > -1)
+            {
+                BindingList<GazeRegionProfile> grfl = this.DataSource as BindingList<GazeRegionProfile>;
+                if (grfl == null)
+                    return false;
+
+                int index = this.SelectedIndex;
+
+                using (BlinkConfig bc = new BlinkConfig(grfl[index].LeftEyeSetting, grfl[index].RightEyeSetting))
+                {
+                    bool resumeSimulationAfter;
+                    Form f = FindForm();
+                    EyeBindMainForm ebmf = f as EyeBindMainForm;
+                    if (ebmf == null)
+                        return false;
+
+                    if (ebmf.GetSimulationState())
+                    {
+                        resumeSimulationAfter = false;
+                    }
+                    else
+                    {
+                        resumeSimulationAfter = true;
+                        ebmf.SetSimulationState(true);
+                    }
+
+                    bc.ShowDialog();
+                    bc.Dispose();
+
+                    if (resumeSimulationAfter)
+                    {
+                        ebmf.SetSimulationState(false);
+                    }
+                }
+            }
+            return false;
         }
     }
 }

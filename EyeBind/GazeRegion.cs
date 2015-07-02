@@ -90,6 +90,7 @@ namespace EyeBind
             this.DragMove = true;
             this.MinimumSize = new System.Drawing.Size(1, 1);
             this.RegionName = "Gaze Region";
+            this.Icon = Properties.Resources.eyebind1;
 
             this.GazeEnterColor = gazeEnterColorDefault;
             this.GazeExitColor = gazeExitColorDefault;

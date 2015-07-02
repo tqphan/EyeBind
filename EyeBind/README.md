@@ -11,7 +11,7 @@ EyeBind is an open source keyboard simulator for the [Tobii EyeX](http://www.tob
 
 ####Video:
 
-A video demonstration of EyeBind will be added in the near future.
+A video demonstration of EyeBind will be added in the near future...
 
 ####Usage Instructions:
 
@@ -68,10 +68,11 @@ If you find EyeBind to be useful, send me an [e-mail](quoc@hush.ai). Feedbacks a
 * Gaze gestures (similar to [mouse gestures](http://en.wikipedia.org/wiki/Pointing_device_gesture)).
 * ~~Allow greater visual customization of Gaze Regions (perhaps by using a HTML Renderer).~~
 
-## Props to other open source projects used in EyeBind:
+## Credits:
 
 * [Windows Input Simulator](https://inputsimulator.codeplex.com/) for simulation of keyboard/mouse inputs.
-* [freesfx](http://www.freesfx.co.uk) for sound effects.
 * [globalmousekeyhook](https://github.com/gmamaladze/globalmousekeyhook) for global hotkeys detections.
 * [HTML-Renderer](https://github.com/ArthurHub/HTML-Renderer) for HTML Rendering.
+* [freesfx](http://www.freesfx.co.uk) for sound effects.
+* [Icons](https://onedrive.live.com/redir?resid=A0415EEE6CA3D36B!1508&authkey=!ALK3PzR5nVnI4ro&ithint=file%2czip) by Zathras
 

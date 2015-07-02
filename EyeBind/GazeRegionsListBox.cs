@@ -6,8 +6,6 @@ namespace EyeBind
 {
     public class GazeRegionsListBox : ListBox
     {
-        private bool resumeSimulationAfter;
-
         public bool RemoveSelectedGazeRegion()
         {
             if (this.SelectedIndex > -1)
@@ -63,6 +61,7 @@ namespace EyeBind
                         return false;
                     using (GazeRegionEditor gre = new GazeRegionEditor(grl[this.SelectedIndex]))
                     {
+                        bool resumeSimulationAfter;
                         Form f = FindForm();
                         EyeBindMainForm ebmf = f as EyeBindMainForm;
                         if (ebmf == null)
@@ -70,11 +69,11 @@ namespace EyeBind
 
                         if(ebmf.GetSimulationState())
                         {
-                            this.resumeSimulationAfter = false;
+                            resumeSimulationAfter = false;
                         }
                         else
                         {
-                            this.resumeSimulationAfter = true;
+                            resumeSimulationAfter = true;
                             ebmf.SetSimulationState(true);
                         }
 
@@ -84,7 +83,7 @@ namespace EyeBind
                         this.DataSource = grl;
                         this.DisplayMember = "RegionName";
 
-                        if(this.resumeSimulationAfter)
+                        if(resumeSimulationAfter)
                         {
                             ebmf.SetSimulationState(false);
                         }

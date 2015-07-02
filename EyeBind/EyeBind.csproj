@@ -51,6 +51,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>resources\eyebind1.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="HtmlRenderer">
       <HintPath>..\packages\HtmlRenderer.Core.1.5.0.5\lib\net45\HtmlRenderer.dll</HintPath>
@@ -75,7 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BindingExtensions.cs" />
-    <Compile Include="BlinkMonitor.cs" />
+    <Compile Include="BlinkDetector.cs" />
     <Compile Include="BlinkConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,13 +90,14 @@
     </Compile>
     <Compile Include="DoubleDecimalConverter.cs" />
     <Compile Include="Eye.cs" />
+    <Compile Include="EyeSetting.cs" />
     <Compile Include="EyeBindMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EyeBindMainForm.Designer.cs">
       <DependentUpon>EyeBindMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FirstPersonMouseMover.cs" />
+    <Compile Include="MouseMover.cs" />
     <Compile Include="GazeHtmlPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -140,7 +144,14 @@
     <Compile Include="KeyRecorderDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MouseMover.cs" />
+    <Compile Include="MouseMoveMode.cs" />
+    <Compile Include="MouseMoverSettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MouseMoverSettingsDialog.Designer.cs">
+      <DependentUpon>MouseMoverSettingsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PointD.cs" />
     <Compile Include="ProcessChecker.cs" />
     <Compile Include="ProfileCloneDialog.cs">
       <SubType>Form</SubType>
@@ -188,6 +199,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GeneralSettingsDialog.resx">
       <DependentUpon>GeneralSettingsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MouseMoverSettingsDialog.resx">
+      <DependentUpon>MouseMoverSettingsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProfileCloneDialog.resx">
       <DependentUpon>ProfileCloneDialog.cs</DependentUpon>
@@ -237,6 +251,9 @@
     <None Include="resources\deactivation.wav" />
     <None Include="resources\enter.wav" />
     <None Include="resources\exit.wav" />
+    <Content Include="resources\eyebind1.ico" />
+    <Content Include="resources\eyebind2.ico" />
+    <Content Include="resources\eyebind3.ico" />
     <Content Include="Tobii.EyeX.Client.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

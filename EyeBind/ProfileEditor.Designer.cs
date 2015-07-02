@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProfileEditor));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.profileNameTextBox = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.profileHotkeyResetButton = new System.Windows.Forms.Button();
+            this.profileHotKeyTextBox = new EyeBind.HotKeyTextBox();
             this.acceptButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.profileHotKeyTextBox = new EyeBind.HotKeyTextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -77,6 +78,14 @@
             this.profileHotkeyResetButton.UseVisualStyleBackColor = true;
             this.profileHotkeyResetButton.Click += new System.EventHandler(this.profileHotkeyResetButton_Click);
             // 
+            // profileHotKeyTextBox
+            // 
+            this.profileHotKeyTextBox.Location = new System.Drawing.Point(6, 19);
+            this.profileHotKeyTextBox.Name = "profileHotKeyTextBox";
+            this.profileHotKeyTextBox.SettingKey = System.Windows.Forms.Keys.None;
+            this.profileHotKeyTextBox.Size = new System.Drawing.Size(107, 20);
+            this.profileHotKeyTextBox.TabIndex = 0;
+            // 
             // acceptButton
             // 
             this.acceptButton.DialogResult = System.Windows.Forms.DialogResult.OK;
@@ -97,14 +106,6 @@
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
-            // profileHotKeyTextBox
-            // 
-            this.profileHotKeyTextBox.Location = new System.Drawing.Point(6, 19);
-            this.profileHotKeyTextBox.Name = "profileHotKeyTextBox";
-            this.profileHotKeyTextBox.SettingKey = System.Windows.Forms.Keys.None;
-            this.profileHotKeyTextBox.Size = new System.Drawing.Size(107, 20);
-            this.profileHotKeyTextBox.TabIndex = 0;
-            // 
             // ProfileEditor
             // 
             this.AcceptButton = this.acceptButton;
@@ -116,6 +117,7 @@
             this.Controls.Add(this.acceptButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ProfileEditor";

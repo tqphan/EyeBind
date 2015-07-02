@@ -226,5 +226,65 @@ namespace EyeBind.Properties {
                 this["GazeExitSoundEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("FirstPersonShooter")]
+        public global::EyeBind.MouseMoveMode MouseMoveMode {
+            get {
+                return ((global::EyeBind.MouseMoveMode)(this["MouseMoveMode"]));
+            }
+            set {
+                this["MouseMoveMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        public int MouseMoveFollowSpeed {
+            get {
+                return ((int)(this["MouseMoveFollowSpeed"]));
+            }
+            set {
+                this["MouseMoveFollowSpeed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int MouseMoveFirstPersonSpeed {
+            get {
+                return ((int)(this["MouseMoveFirstPersonSpeed"]));
+            }
+            set {
+                this["MouseMoveFirstPersonSpeed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int MouseMoveFirstPersonSpeedMultiplier {
+            get {
+                return ((int)(this["MouseMoveFirstPersonSpeedMultiplier"]));
+            }
+            set {
+                this["MouseMoveFirstPersonSpeedMultiplier"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int MouseMoveStopDistance {
+            get {
+                return ((int)(this["MouseMoveStopDistance"]));
+            }
+            set {
+                this["MouseMoveStopDistance"] = value;
+            }
+        }
     }
 }

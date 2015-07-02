@@ -12,6 +12,8 @@ namespace EyeBind
         private const string defaultName = "Gaze Profile";
         private string name;
         private Keys hotkey = Keys.None;
+        private EyeSetting leftEye = new EyeSetting();
+        private EyeSetting rightEye = new EyeSetting();
 
         public BindingList<GazeRegion> Profile
         {
@@ -34,6 +36,22 @@ namespace EyeBind
                     this.hotkey = value;
                     NotifyPropertyChanged();
                 }
+            }
+        }
+
+        public EyeSetting LeftEyeSetting
+        {
+            get
+            {
+                return this.leftEye;
+            }
+        }
+
+        public EyeSetting RightEyeSetting
+        {
+            get
+            {
+                return this.rightEye;
             }
         }
 
@@ -145,10 +163,30 @@ namespace EyeBind
                 this.Hotkey = Keys.None;
             }
             
-            XmlNodeList grn = xn.ChildNodes; 
+            XmlNodeList grn = xn.SelectNodes(".//GazeRegion"); 
             foreach(XmlNode n in grn)
             {
                 this.grl.Add(new GazeRegion(n));
+            }
+
+            try
+            {
+                XmlNode len = xn.SelectSingleNode(".//LeftEye/Blink");
+                leftEye = new EyeSetting(len);
+            }
+            catch (Exception)
+            {
+                leftEye = new EyeSetting();
+            }
+
+            try
+            {
+                XmlNode ren = xn.SelectSingleNode(".//RightEye/Blink");
+                rightEye = new EyeSetting(ren);
+            }
+            catch (Exception)
+            {
+                rightEye = new EyeSetting();
             }
         }
 
@@ -167,6 +205,20 @@ namespace EyeBind
                 xfrag.InnerXml = xd.OuterXml;
                 xmlDoc.DocumentElement.AppendChild(xfrag);
             }
+
+            XmlElement le = xmlDoc.CreateElement("LeftEye");
+            XmlDocument led = leftEye.ToXml();
+            XmlDocumentFragment lexfrag = xmlDoc.CreateDocumentFragment();
+            lexfrag.InnerXml = led.OuterXml;
+            le.AppendChild(lexfrag);
+            xmlDoc.DocumentElement.AppendChild(le);
+
+            XmlElement re = xmlDoc.CreateElement("RightEye");
+            XmlDocument red = rightEye.ToXml();
+            XmlDocumentFragment rexfrag = xmlDoc.CreateDocumentFragment();
+            rexfrag.InnerXml = red.OuterXml;
+            re.AppendChild(rexfrag);
+            xmlDoc.DocumentElement.AppendChild(re);
 
             return xmlDoc;
         }

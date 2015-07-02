@@ -53,5 +53,20 @@
     <Setting Name="GazeExitSoundEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="MouseMoveMode" Type="EyeBind.MouseMoveMode" Scope="User">
+      <Value Profile="(Default)">FirstPersonShooter</Value>
+    </Setting>
+    <Setting Name="MouseMoveFollowSpeed" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">25</Value>
+    </Setting>
+    <Setting Name="MouseMoveFirstPersonSpeed" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="MouseMoveFirstPersonSpeedMultiplier" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="MouseMoveStopDistance" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

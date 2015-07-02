@@ -66,6 +66,17 @@ namespace WindowsInput
         }
 
         /// <summary>
+        /// Gets the current mouse location in pixels.
+        /// </summary>
+        public void GetMousePosition(ref double x, ref double y)
+        {
+            POINT p;
+            bool result = Native.NativeMethods.GetCursorPos(out p);
+            x = p.X;
+            y = p.Y;
+        }
+
+        /// <summary>
         /// Gets the current X mouse location in pixels.
         /// </summary>
         public int GetMousePositionX()
